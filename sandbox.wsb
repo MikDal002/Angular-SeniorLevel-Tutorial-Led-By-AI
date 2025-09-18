@@ -1,0 +1,18 @@
+<Configuration>
+  <MappedFolders>
+    <MappedFolder>
+      <HostFolder>c:\Users\DQ845LT\OneDrive - EY\Desktop\_Prywatne\EJAJOWE szkolenie z angulara</HostFolder>
+      <SandboxFolder>C:\Users\WDAGUtilityAccount\Desktop\Shared</SandboxFolder>
+      <ReadOnly>false</ReadOnly>
+    </MappedFolder>
+    <MappedFolder>
+      <HostFolder>C:\Users\DQ845LT\OneDrive - EY\Desktop\_Prywatne</HostFolder>
+      <SandboxFolder>C:\Users\WDAGUtilityAccount\Desktop\Private</SandboxFolder>
+      <ReadOnly>true</ReadOnly>
+    </MappedFolder>
+  </MappedFolders>
+  <ClipboardRedirection>Enabled</ClipboardRedirection>
+  <LogonCommand>
+    <Command>cmd.exe /c start powershell.exe -NoExit -ExecutionPolicy Bypass -File C:\Users\WDAGUtilityAccount\Desktop\Shared\install.ps1</Command>
+  </LogonCommand>
+</Configuration>
