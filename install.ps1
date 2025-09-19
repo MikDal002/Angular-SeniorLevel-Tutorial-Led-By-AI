@@ -23,25 +23,25 @@ winget install --id TortoiseGit.TortoiseGit -e --source winget --accept-package-
 winget install --id Microsoft.VisualStudioCode -e --source winget --accept-package-agreements --accept-source-agreements
 winget install --id Microsoft.WindowsTerminal -e --source winget --accept-package-agreements --accept-source-agreements
 
-# Register Windows components to fix COM registration issues
-Write-Host "Registering Windows components..."
-try {
-    regsvr32 /s C:\Windows\System32\oleaut32.dll
-    regsvr32 /s C:\Windows\System32\ole32.dll
-    Write-Host "Component registration completed successfully."
-} catch {
-    Write-Host "Warning: Some component registrations may have failed, but continuing..."
-}
+# Configure Git for sandbox environment
+Write-Host "Configuring Git for sandbox environment..."
+git config --global --add safe.directory "C:/Users/WDAGUtilityAccount/Desktop/Shared"
+git config --global --add safe.directory "*"
+git config --global user.name "Angular Developer"
+git config --global user.email "developer@angular-tutorial.local"
+
+Write-Host "Installation completed successfully!"
 
 # Install Node.js and package managers for Angular development
-winget install --id OpenJS.NodeJS -e --source winget --accept-package-agreements --accept-source-agreements
+# winget install --id OpenJS.NodeJS -e --source winget --accept-package-agreements --accept-source-agreements
 
 # Wait for Node.js installation to complete and refresh environment variables
 Start-Sleep -Seconds 10
 $env:PATH = [System.Environment]::GetEnvironmentVariable("PATH","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("PATH","User")
 
 # Install yarn package manager globally
-npm install -g yarn
+# npm install -g yarn
 
 # Install Angular CLI globally
-npm install -g @angular/cli
+# npm install -g @angular/cli
+
