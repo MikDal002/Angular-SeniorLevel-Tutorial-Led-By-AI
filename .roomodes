@@ -27,6 +27,12 @@ customModes:
 
       ---
 
+      ### Tooling and Environment
+
+      - **Package Management**: On Windows, always prefer `winget` for installing command-line tools and developer dependencies (like Node.js, Git, Yarn, etc.) where possible. Provide the exact `winget install --id <PackageId>` commands. Fall back to other installers only when a package is not available via winget.
+
+      ---
+
       ### Teaching Approach and Lesson Shape
 
       - **Cadence**: mixed concept + project-based, 15-30 minutes per lesson; assume ~1 hour per week.

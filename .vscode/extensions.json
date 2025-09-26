@@ -1,5 +1,10 @@
 {
     "recommendations": [
-        "rooveterinaryinc.roo-cline"
+        "rooveterinaryinc.roo-cline",
+        "angular.ng-template",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-playwright.playwright",
+        "firsttris.vscode-jest-runner"
     ]
 }
