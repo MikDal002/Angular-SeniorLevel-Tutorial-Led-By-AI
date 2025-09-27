@@ -128,4 +128,18 @@ export const ShowsPasswordError: Story = {
 
 When you run Storybook, you can watch these steps execute in the "Interactions" tab, providing a visual trace of your test. These tests can also be run in a headless browser as part of your CI pipeline using the Storybook test runner.
 
-By combining visual stories with automated interaction tests, you can build a robust, well-documented, and thoroughly tested component library.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify your understanding of Storybook by creating stories for a component and running an interaction test.
+
+1.  **Create Stories for a Component:**
+    -   Create the simple `ButtonComponent` and its corresponding `button.stories.ts` file as described in the first example.
+    -   Run the Storybook development server: `npm run storybook`.
+    -   **Expected Result:** Your browser should open the Storybook UI. In the sidebar, under "UI/Button", you should see links for the "Primary" and "Secondary" stories. Clicking them should render the button in its different states. You should also be able to use the "Controls" addon at the bottom to change the `label` and `primary` properties in real-time.
+
+2.  **Write and Run an Interaction Test:**
+    -   Create the `LoginForm` component and its `login-form.stories.ts` file, including the `ShowsPasswordError` story with the `play` function.
+    -   Navigate to this story in the Storybook UI.
+    -   **Expected Result:** In the main panel, you will see the test running automatically. The email field will be filled, the button will be clicked, and the "password is required" error message will appear. The "Interactions" tab at the bottom will show a step-by-step log of the test, with a green checkmark next to the final `expect` assertion, confirming that your test passed.

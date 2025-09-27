@@ -124,4 +124,24 @@ someTrigger$.pipe(
 -   **Async Pipe (`| async`):** The original solution for templates. Like `toSignal`, it handles subscription and unsubscription automatically. It's still a perfectly valid and useful pattern.
 -   **Finite Observables:** Observables that are guaranteed to complete on their own (like those from `HttpClient`) do not need manual cleanup. The `http.get()` observable emits one value and then completes, cleaning itself up.
 
-By using `toSignal` for template bindings and `takeUntilDestroyed` (correctly placed!) for imperative subscriptions, you can build complex, reactive Angular applications that are free from memory leaks.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify the memory leak and the fix using your browser's developer tools and by observing console logs.
+
+1.  **Build the "Leaky" Component:**
+    -   Create the `AClassicLeakComponent` as described in the lesson.
+    -   Create two routes in your application, one that displays this component (`/leaky`) and one that displays a different component (`/other`).
+    -   Add links to navigate between `/leaky` and `/other`.
+
+2.  **Observe the Leak:**
+    -   Run the application and navigate to `/leaky`. You will see "Leaky subscription is still running!" logged to the console every second.
+    -   Navigate to `/other`.
+    -   **Expected Result:** The console will **continue** to log "Leaky subscription is still running!" even though the component has been destroyed. Each time you navigate back to `/leaky` and then away again, a new, permanent `interval` subscription will be created, and you will see more and more messages logged to the console per second. This is a visible memory leak.
+
+3.  **Implement the Fix:**
+    -   Modify the component to use the `takeUntilDestroyed()` operator as shown in "The Modern Solution".
+    -   Run the application again and navigate to `/leaky`. You will see "Clean subscription is running..." logged to the console.
+    -   Navigate to `/other`.
+    -   **Expected Result:** The console messages should **stop** immediately. Navigating back to `/leaky` will start a new stream, and navigating away will stop it again. This confirms that the subscription is being properly cleaned up when the component is destroyed.

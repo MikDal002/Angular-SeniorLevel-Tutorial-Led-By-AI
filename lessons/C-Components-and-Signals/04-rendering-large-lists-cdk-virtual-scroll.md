@@ -93,4 +93,21 @@ Virtual scrolling is most effective when you have:
 
 If your items have variable heights, you can still use virtual scrolling, but you will need to implement a custom `VirtualScrollStrategy` to tell the viewport how to calculate the size and position of each item.
 
-By leveraging the CDK's virtual scrolling capabilities, you can build applications that handle massive amounts of data with a smooth, responsive, and high-performance user experience.
+---
+
+## ✅ Verifiable Outcome
+
+After completing this lesson, you can verify the difference between `*ngFor` and `*cdkVirtualFor` using your browser's developer tools.
+
+1.  **Build the Component:**
+    -   Create a component that generates a very large array of items (e.g., 10,000 items).
+    -   Create two lists in the template: one using a standard `*ngFor` and one using `<cdk-virtual-scroll-viewport>` with `*cdkVirtualFor` as described in the lesson.
+
+2.  **Run and Observe `*ngFor`:**
+    -   Run the application and view the page with the lists.
+    -   Open the browser's DevTools and use the "Inspector" to examine the DOM for the `*ngFor` list.
+    -   **Expected Result:** You will see thousands of `<div>` or `<li>` elements rendered in the DOM, even though only a few are visible on the screen. The page may feel sluggish.
+
+3.  **Run and Observe `*cdkVirtualFor`:**
+    -   Now, inspect the DOM for the `cdk-virtual-scroll-viewport`.
+    -   **Expected Result:** You will see only a small, fixed number of `<div>` elements in the DOM (e.g., 10-20, just enough to fill the viewport). As you scroll down the list, you will see the content inside these divs changing, but no new `<div>` elements are added. This proves that virtual scrolling is working, keeping the DOM light and the application performant.

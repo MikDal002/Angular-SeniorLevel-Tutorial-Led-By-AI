@@ -137,4 +137,24 @@ Now, when the `items` array is updated, `*ngFor` will use the `trackById` functi
 
 - **Resource:** [Optimizing `*ngFor` with `trackBy`](https://medium.com/@ausaf.cs/angular-change-detection-how-it-works-and-how-to-optimize-it-77fb189d2282)
 
-By understanding these common pitfalls and their solutions, you can write more performant and bug-free Angular applications with `OnPush` change detection.
+---
+
+## ✅ Verifiable Outcome
+
+To verify the concepts in this lesson, you can build the "Broken" version of the `ParentComponent` and `ChildComponent` and observe the incorrect behavior.
+
+1.  **Observe the Mutation Bug:**
+    -   Create the two components as described in the "Reproducing the Bug" section.
+    -   Run the application and click the "Add Item" button.
+    -   **Expected Result:** You will see nothing happen in the UI. The list will not update, demonstrating that mutating the `@Input` array does not trigger `OnPush` change detection.
+
+2.  **Verify the Immutable Update Fix:**
+    -   Modify the `addItem` method in the `ParentComponent` to use the immutable update pattern (`this.items = [...this.items, newItem];`).
+    -   Run the application again and click the "Add Item" button.
+    -   **Expected Result:** The new item should now appear correctly in the list, demonstrating that providing a new array reference triggers the change detection.
+
+3.  **Verify `trackBy` (Advanced):**
+    -   Add the `trackBy` function to the `ChildComponent` and `*ngFor`.
+    -   Open your browser's Developer Tools and inspect the `<ul>` element.
+    -   Click the "Add Item" button.
+    -   **Expected Result:** Observe the DOM updates in the DevTools. You should see that only a single new `<li>` element is added to the DOM. The existing `<li>` element for the first item is not touched or re-rendered, proving that `trackBy` is optimizing the DOM updates.

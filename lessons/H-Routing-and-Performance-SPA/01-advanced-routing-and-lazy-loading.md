@@ -132,3 +132,27 @@ export const appConfig: ApplicationConfig = {
 Now, only the `dashboard` module will be preloaded in the background, while the `admin` module remains fully lazy. This gives you the optimal balance between a small initial bundle and fast navigation to your most important features.
 
 - **Resource:** [Beginner's Guide to Angular Preloading](https://zerotomastery.io/blog/beginners-guide-to-angular-preloading/)
+
+---
+
+## ✅ Verifiable Outcome
+
+You can verify lazy loading and preloading by observing the network requests in your browser's developer tools.
+
+1.  **Test Basic Lazy Loading:**
+    -   Configure a route (e.g., `/admin`) to be lazy-loaded using `loadChildren`, but do **not** configure any preloading strategy yet.
+    -   Run `ng build` and inspect the `dist/` folder. You should see separate JavaScript chunk files for your main app and for the lazy-loaded admin feature.
+    -   Run `ng serve` and open the app. Open the DevTools "Network" tab.
+    -   **Expected Result:** When the application first loads, you will only see the main bundles being downloaded. The chunk for the `/admin` route will **not** be downloaded.
+    -   Now, click a link to navigate to `/admin`.
+    -   **Expected Result:** As soon as you click the link, you will see a new network request to fetch the JavaScript chunk for the admin feature.
+
+2.  **Test `PreloadAllModules` Strategy:**
+    -   Configure your router to use the `PreloadAllModules` strategy.
+    -   Run `ng serve` and open the app. Keep the "Network" tab open.
+    -   **Expected Result:** After the main application bundles have loaded, you will see new network requests automatically fire in the background to fetch the chunks for **all** lazy-loaded routes (e.g., `/admin` and `/dashboard`). By the time you click the link to navigate to them, the code is already in the browser.
+
+3.  **Test Custom Preloading Strategy:**
+    -   Implement and provide the `SelectivePreloadStrategy`. Configure the `/dashboard` route with `data: { preload: true }` and leave the `/admin` route without it.
+    -   Run `ng serve`.
+    -   **Expected Result:** After the main app loads, you will see a network request to preload the chunk for `/dashboard`, but **not** for `/admin`. The `/admin` chunk will only be loaded on-demand when you explicitly navigate to it.

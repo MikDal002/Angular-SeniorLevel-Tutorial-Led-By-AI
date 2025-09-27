@@ -144,4 +144,32 @@ export const selectProductById = (id: string) => createSelector(
 ```
 Now, in your components, you can use `store.select(selectAllProducts)` to get a sorted array of all products. This selector will only re-create the array if the underlying `ids` or `entities` in the state have actually changed, preventing unnecessary re-renders of your components.
 
-By combining `@ngrx/entity` for state manipulation and memoized selectors for state querying, you can build a highly performant and maintainable system for managing collections of data in your global store.
+---
+
+## ✅ Verifiable Outcome
+
+After implementing `@ngrx/entity`, you can verify its functionality and the performance benefits of memoized selectors.
+
+1.  **Implement the Entity State:**
+    -   Refactor a feature in your application (e.g., a product list) to use `@ngrx/entity`.
+    -   Create the adapter, update the state interface, and rewrite your reducer to use the adapter methods (`setAll`, `addOne`, etc.).
+    -   Rewrite your selectors to use the adapter's `getSelectors()` method.
+
+2.  **Verify Reducer Logic:**
+    -   Run the unit tests for your reducer.
+    -   **Expected Result:** Your reducer tests should still pass. The tests will be simpler now, as you are testing that the correct adapter method is called, rather than testing complex array manipulation logic.
+
+3.  **Verify Selector Memoization:**
+    -   In a component, create a selector that does an expensive calculation on the array of entities, such as a complex filter or map.
+        ```typescript
+        export const selectExpensiveDerivedData = createSelector(
+          selectAllProducts,
+          (products) => {
+            console.log('Projector function ran!'); // Add a log
+            return products.filter(p => p.price > 100).map(p => p.name);
+          }
+        );
+        ```
+    -   Subscribe to this selector in your component and display the results. Also, add a button that dispatches an action that modifies a completely unrelated piece of state.
+    -   Run the application and open the console.
+    -   **Expected Result:** You will see "Projector function ran!" logged once when the component loads. When you click the button to update the unrelated state, you will **not** see the log message again. This proves that the selector is memoized; because its input (`selectAllProducts`) has not changed, the expensive projector function is not re-executed.

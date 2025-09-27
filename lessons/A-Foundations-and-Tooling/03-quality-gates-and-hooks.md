@@ -97,4 +97,24 @@ Consistent commit messages are key to a maintainable project history and are ess
 - **Resource:** [semantic-release Documentation](https://semantic-release.gitbook.io/semantic-release/)
 - **Further Reading:** [Embracing Automated Versioning with Semantic Release](https://igventurelli.io/embracing-automated-versioning-with-semantic-release/)
 
-With this setup, every time you commit, your staged files will be automatically linted and formatted. Your commit message will be validated to ensure it follows the conventional commit format. And when you're ready to release, a single command will handle versioning, changelog generation, and tagging for you.
+---
+
+## ✅ Verifiable Outcome
+
+After completing this lesson, you can verify that the quality gates are working correctly by performing the following tests in your terminal:
+
+1.  **Test the `pre-commit` hook:**
+    -   Open any `.ts` file and intentionally introduce a syntax or linting error (e.g., `const x: string = 123;`).
+    -   Stage the file: `git add .`
+    -   Try to commit it: `git commit -m "test: add broken file"`
+    -   **Expected Result:** The commit should **fail**. The `lint-staged` hook will run ESLint, which will find the error and prevent the commit.
+
+2.  **Test the `commit-msg` hook:**
+    -   Fix the linting error you introduced in the previous step.
+    -   Stage the file again: `git add .`
+    -   Try to commit with a non-conventional commit message: `git commit -m "updated stuff"`
+    -   **Expected Result:** The commit should **fail**. The `commitlint` hook will validate the message and reject it because it doesn't follow the format (e.g., `feat:`, `fix:`, `chore:`, etc.).
+
+3.  **Test a successful commit:**
+    -   With the linting error fixed, commit with a valid message: `git commit -m "chore: setup git hooks"`
+    -   **Expected Result:** The commit should **succeed**.

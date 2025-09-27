@@ -116,4 +116,19 @@ In this example:
 
 - **Resource:** [Official `toObservable` documentation](https://angular.io/guide/rxjs-interop#toobservable)
 
-By mastering these two simple functions, you can seamlessly integrate the power of RxJS for complex asynchronous tasks with the simplicity and performance of Signals for component-level state management.
+---
+
+## ✅ Verifiable Outcome
+
+After completing this lesson, you can verify your understanding by implementing the two main examples.
+
+1.  **Test `toSignal`:**
+    -   Create the `DataService` and `MyComponent` as described in the first example.
+    -   Display `MyComponent` in your application.
+    -   **Expected Result:** The page should initially display "Latest data: Waiting for data...". After one second, the text should update to "Latest data: Data packet #1", and then continue to update every second. This confirms you have successfully converted an observable stream into a reactive signal.
+
+2.  **Test `toObservable`:**
+    -   Create the `SearchComponent` and a mock `SearchService` as described in the second example.
+    -   In the `SearchComponent`, add a subscription to the `results$` observable to log its output to the console: `results$.subscribe(console.log);`.
+    -   Display the component and type quickly into the input field (e.g., "test search").
+    -   **Expected Result:** You should see that the `console.log` only fires *once*, a short moment after you stop typing. This confirms you have successfully converted a signal into an observable and applied RxJS operators (`debounceTime`) to it.

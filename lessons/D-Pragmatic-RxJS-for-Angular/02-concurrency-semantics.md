@@ -97,3 +97,38 @@ loginClicks$.pipe(
 | `concatMap` | Queue operations, run one after another        | Sequential API calls        |
 | `mergeMap`  | Run all operations in parallel                 | Uploading multiple files    |
 | `exhaustMap`| Ignore new operations while one is in progress | Preventing double-submits |
+
+---
+
+## ✅ Verifiable Outcome
+
+You can verify your understanding of these operators by building a small playground component.
+
+1.  **Create the Playground Component:**
+    -   Create a component with a single button.
+    -   Create a `Subject` that emits when the button is clicked (`clicks$ = new Subject<void>()`).
+    -   Create a mock "API call" observable that takes some time to complete:
+        ```typescript
+        mockApiCall(requestNumber: number) {
+          console.log(`Request #${requestNumber} started...`);
+          return of(`Response for #${requestNumber}`).pipe(
+            delay(1000) // Simulate a 1-second network delay
+          );
+        }
+        ```
+
+2.  **Test Each Operator:**
+    -   In your component, create a stream that pipes the `clicks$` subject through one of the four mapping operators. Subscribe to it and log the results.
+        ```typescript
+        // Example for exhaustMap
+        let requestCount = 0;
+        this.clicks$.pipe(
+          exhaustMap(() => this.mockApiCall(++requestCount))
+        ).subscribe(response => console.log(response));
+        ```
+    -   Run the application and open the console.
+    -   **Test `exhaustMap`:** Click the button rapidly multiple times.
+        -   **Expected Result:** You should see "Request #1 started..." logged once. After one second, you will see "Response for #1". All the clicks you made while the first request was in flight are ignored.
+    -   **Test `switchMap`:** Change the operator to `switchMap`. Click the button, wait half a second, and click it again.
+        -   **Expected Result:** You will see "Request #1 started..." followed by "Request #2 started...". After a total of 1.5 seconds, you will *only* see "Response for #2". The first request was cancelled.
+    -   Repeat this process for `concatMap` (requests will happen sequentially, one after another) and `mergeMap` (requests will start in parallel and responses will arrive as they complete).

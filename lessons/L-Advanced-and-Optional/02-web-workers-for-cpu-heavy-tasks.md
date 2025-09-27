@@ -4,6 +4,7 @@ The browser's main thread is responsible for everything the user sees and intera
 
 **Web Workers** are a browser feature that solves this problem by allowing you to run a script on a separate, background thread. This offloads the heavy work from the main thread, keeping your application's UI smooth and responsive.
 
+- **Resource:** [MDN Docs: Web Workers API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)
 - **Resource:** [Official Angular Guide: Using Web Workers](https://angular.io/guide/web-worker)
 - **Resource:** [Angular Web Workers: What, Why, When, and How](https://medium.com/@sehban.alam/angular-web-workers-what-why-when-and-how-2025-edition-09020c531fe6)
 

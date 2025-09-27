@@ -147,4 +147,24 @@ export class AuthInterceptor implements HttpInterceptor {
 6.  **Refresh Completes:** The `/api/auth/refresh` call returns new tokens. The `tap` operator in the `AuthService` stores them and emits the new access token via `refreshTokenSubject.next()`. The `refreshTokenInProgress` flag is set back to `false`.
 7.  All the waiting requests (which were subscribed to `refreshTokenSubject`) now receive the new token, get retried with the new token, and proceed as normal.
 
-This pattern ensures that no matter how many API calls fail simultaneously, the token refresh operation is only ever performed once, preventing race conditions and creating a seamless, resilient user experience.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify the single-flight pattern is working correctly by using `HttpClientTestingModule` and observing the network requests in your test.
+
+1.  **Implement the Services:**
+    -   Create the `AuthService` and `AuthInterceptor` as described in the lesson.
+    -   Provide the interceptor in your test's `TestBed` configuration.
+
+2.  **Create the Test:**
+    -   In your test, trigger two parallel API calls to different endpoints (e.g., `/api/user` and `/api/notifications`).
+    -   Use `HttpTestingController` to handle the requests.
+
+3.  **Simulate the Race Condition:**
+    -   Expect both initial requests. Flush both of them with a `401 Unauthorized` error.
+    -   **Expected Result:** Your `AuthService` logic will now trigger. You should expect **only one** request to your refresh endpoint (`/api/auth/refresh`).
+    -   Flush the refresh request with a successful response containing new tokens.
+    -   **Expected Result:** The service should now retry the original two failed requests. You should expect two new requests, one to `/api/user` and one to `/api/notifications`. Verify that these new requests have the new access token attached to their `Authorization` header.
+
+This test proves that even though two requests failed simultaneously, only one refresh attempt was made, and both original requests were successfully queued and retried after the refresh completed.

@@ -160,4 +160,33 @@ data$.pipe(
 ).subscribe();
 ```
 
-By focusing on this core set of operators, you can build powerful, reactive, and resilient Angular applications.
+---
+
+## ✅ Verifiable Outcome
+
+Since this lesson is a conceptual toolkit, the best way to verify your understanding is to create a "playground" component where you can experiment with these operators.
+
+1.  **Create a Playground Component:**
+    -   Use the Angular CLI to generate a new component: `ng g c rxjs-playground`.
+    -   In the component's class, create a few simple source observables. A `Subject` is great for this, as you can manually push values to it.
+        ```typescript
+        sourceA$ = new Subject<number>();
+        sourceB$ = new Subject<string>();
+        ```
+    -   Add buttons to the component's template that call methods to push values to your subjects (e.g., `pushToA()`, `pushToB()`).
+
+2.  **Experiment with Operators:**
+    -   Create a new observable in your component class that pipes one of your source observables through an operator from the lesson. Subscribe to it and log the result to the console.
+        ```typescript
+        // Example with `map`
+        mappedA$ = this.sourceA$.pipe(map(val => val * 10));
+
+        ngOnInit() {
+          this.mappedA$.subscribe(result => console.log('Mapped A:', result));
+        }
+        ```
+    -   **Expected Result:** Run the application, open the console, and click the button to push a value to `sourceA$`. You should see the transformed value logged to the console.
+
+3.  **Try a Combination:**
+    -   Experiment with `combineLatest` to merge `sourceA$` and `sourceB$`.
+    -   **Expected Result:** Nothing should be logged until *both* sources have emitted at least one value. After that, a new combined value should be logged whenever *either* source emits a new value. This confirms your understanding of how combination operators work.

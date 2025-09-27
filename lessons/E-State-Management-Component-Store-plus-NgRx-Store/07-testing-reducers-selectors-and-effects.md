@@ -162,4 +162,28 @@ describe('ProductsEffects', () => {
 ```
 - **Resource:** [Testing NgRx Effects with Async/Await](https://www.herodevs.com/blog-posts/testing-ngrx-effects-with-async-await)
 
-By thoroughly testing your reducers, selectors, and effects, you can build a robust and reliable state management layer, giving you confidence that your application behaves as expected.
+---
+
+## ✅ Verifiable Outcome
+
+After completing this lesson, you can verify your understanding by writing and running the tests for your NgRx state feature.
+
+1.  **Write and Run Reducer Tests:**
+    -   Following the example, create a `.spec.ts` file for your feature's reducer.
+    -   Write at least one test case for each `on()` handler in your reducer. Test the initial state, a success case, and a failure/reset case.
+    -   Run `ng test`.
+    -   **Expected Result:** All reducer tests should pass, confirming that your state transitions are working correctly.
+
+2.  **Write and Run Selector Tests:**
+    -   Create a `.spec.ts` file for your feature's selectors.
+    -   Write a test for each selector, using the `.projector()` method for composed selectors.
+    -   Run `ng test`.
+    -   **Expected Result:** All selector tests should pass, confirming that you are correctly deriving data from the state.
+
+3.  **Write and Run Effect Tests:**
+    -   Create a `.spec.ts` file for your feature's effects.
+    -   Following the example, set up the `TestBed` with `provideMockActions` and a mock for your service dependency.
+    -   Write a test for the "happy path" (the service call succeeds and dispatches a success action).
+    -   Write a test for the "error path" (the service call fails and dispatches a failure action).
+    -   Run `ng test`.
+    -   **Expected Result:** All effect tests should pass, confirming that your side effects are correctly orchestrated and that you are handling both success and failure scenarios.

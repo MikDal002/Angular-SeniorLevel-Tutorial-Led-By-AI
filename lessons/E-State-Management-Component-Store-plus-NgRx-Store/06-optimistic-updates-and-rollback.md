@@ -134,4 +134,23 @@ export class ProductsEffects {
 -   **Error UX:** You need a clear way to inform the user that the action they thought was successful has failed and been rolled back (e.g., with a toast notification).
 -   **Not for Every Action:** Optimistic updates are best for operations that have a very high chance of success and where perceived performance is critical. For sensitive or complex operations (like financial transactions), a pessimistic approach is often safer.
 
-Despite the complexity, optimistic updates are a key technique for building modern, high-performance web applications that feel fast and responsive to the user.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify this pattern by creating a component and a test that simulates an API failure.
+
+1.  **Implement the Full Flow:**
+    -   Create the actions, reducer, and effect as described in the lesson.
+    -   Create a component that displays a product's name from the store.
+    -   Add a button that dispatches the `ProductsPageActions.updateProduct` action with a new name for the product (e.g., "Updated Name").
+
+2.  **Test the Optimistic UI Update:**
+    -   Run the application. The component should display the original product name.
+    -   In your browser's DevTools, go to the "Network" tab and enable "Offline" mode to simulate a network failure.
+    -   Click the "Update" button.
+    -   **Expected Result:** The product's name in the UI should **immediately** change to "Updated Name", even though the network request will fail. This demonstrates the optimistic update.
+
+3.  **Test the Rollback:**
+    -   Keep the application running. The `updateProduct` effect will eventually fail because the network is offline.
+    -   **Expected Result:** After the API call times out or fails, the product's name in the UI should **revert back** to its original value. In the Redux DevTools, you will see the `[Products Page] Update Product` action followed by the `[Products API] Update Product Failure` action. Inspecting the state after the failure action will show the original product data has been restored. This confirms the rollback logic is working correctly.

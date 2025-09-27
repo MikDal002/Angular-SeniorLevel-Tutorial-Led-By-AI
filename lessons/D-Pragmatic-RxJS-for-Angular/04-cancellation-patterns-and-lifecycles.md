@@ -91,4 +91,22 @@ This pattern elegantly handles both the initial data fetch and the cancellation/
 
 These patterns are not mutually exclusive. You can and often will use them together. For instance, you might use `switchMap` to react to route changes and then use `takeUntilDestroyed` within a `tap` operator if you need to perform some imperative, long-running side effect based on the result.
 
-By understanding how to tie your observable streams to component and navigation lifecycles, you can create robust, predictable, and efficient applications that correctly handle asynchronous cancellation.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify these cancellation patterns using your browser's developer tools.
+
+1.  **Test `takeUntilDestroyed`:**
+    -   Create the `MyComponent` from the first example. For the `getSomeLongRunningData` method in your service, use a long delay (e.g., `of('some data').pipe(delay(5000))`).
+    -   Create two routes, one for `MyComponent` and one for a different page.
+    -   Run the application and navigate to the route for `MyComponent`. Open the DevTools "Network" tab. You will see the (mock) data request is pending.
+    -   Before the 5-second delay is over, navigate to the other page.
+    -   **Expected Result:** As soon as you navigate away, you should see in the Network tab that the pending request is immediately marked as **`(canceled)`**. This proves that `takeUntilDestroyed` correctly terminated the subscription and the underlying HTTP request when the component was destroyed.
+
+2.  **Test `switchMap`:**
+    -   Implement the `ProductDetailsComponent` from the second example. Use a mock `ProductService` that has a delay, similar to the test above.
+    -   Create routes for `/products/:id`. Add links to navigate between `/products/1` and `/products/2`.
+    -   Run the application and navigate to `/products/1`. You will see the request for product 1 is pending in the Network tab.
+    -   Before the request for product 1 completes, click the link to navigate to `/products/2`.
+    -   **Expected Result:** You will see the first request for product 1 get canceled in the Network tab, and a new request for product 2 will be initiated. This proves that `switchMap` is correctly canceling the previous request when the route parameter changes.

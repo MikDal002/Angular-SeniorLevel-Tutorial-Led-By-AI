@@ -115,3 +115,25 @@ This creates a highly resilient data-fetching mechanism that can automatically r
 
 - **Resource:** [Power of RxJS when using exponential backoff](https://angular.love/power-of-rxjs-when-using-exponential-backoff/)
 - **Resource:** [Timeouts, retries, and backoff with jitter (AWS Builders' Library)](https://aws.amazon.com/builders-library/timeouts-retries-and-backoff-with-jitter/)
+
+---
+
+## ✅ Verifiable Outcome
+
+You can verify these time-based operators by observing console logs and network requests.
+
+1.  **Test `debounceTime`:**
+    -   Create a component with a search input. Bind its `valueChanges` to a stream that uses `debounceTime(500)` and logs to the console.
+    -   Run the application and type quickly into the input field.
+    -   **Expected Result:** The console should not log on every keystroke. It should only log a single value, 500ms after you *stop* typing.
+
+2.  **Test `throttleTime`:**
+    -   Create a component that listens to the `mousemove` event on the `document`. Pipe this event through `throttleTime(1000)` and log to the console.
+    -   Run the application and move your mouse continuously over the page.
+    -   **Expected Result:** The console should only log a new event at most once per second, no matter how much you move the mouse.
+
+3.  **Test the Retry Strategy:**
+    -   Create a component with a button that triggers an `HttpClient` call to a non-existent endpoint (e.g., `/api/flaky`).
+    -   Apply the `genericRetryStrategy` to this `HttpClient` call.
+    -   Run the application, open the DevTools "Network" and "Console" tabs, and click the button.
+    -   **Expected Result:** You will see the first request fail with a 404 in the Network tab. In the console, you will see the log "Attempt 1: retrying in...". A second request will be sent after the calculated delay, which will also fail. This will repeat until the `maxRetryAttempts` is reached, at which point the final error is thrown and the "Retry strategy complete." message is logged.

@@ -8,6 +8,7 @@ Angular has a built-in i18n solution that is robust and well-integrated. However
 
 For applications that require users to switch languages on the fly, without a full page reload, a runtime i18n library is necessary. **Transloco** is the most popular and powerful i18n library for Angular, designed for scalability and developer experience.
 
+- **Resource:** [Official Angular Internationalization (i18n) Guide](https://angular.dev/guide/i18n/overview)
 - **Resource:** [Transloco Official Documentation](https://jsverse.gitbook.io/transloco/)
 - **Resource:** [Angular Tutorial on Localizing with Transloco](https://phrase.com/blog/posts/angular-10-tutorial-localization-transloco/)
 

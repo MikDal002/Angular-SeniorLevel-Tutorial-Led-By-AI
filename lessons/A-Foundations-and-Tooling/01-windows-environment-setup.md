@@ -6,9 +6,28 @@ This lesson guides you through setting up a professional development environment
 
 A modern web development workflow starts with the right tooling. We'll use the official installers for each tool to ensure they are correctly set up and added to your system's PATH.
 
+### Recommended: Node Version Manager (NVM) for Windows
+
+Different projects may require different versions of Node.js. A Node Version Manager (NVM) allows you to easily switch between Node.js versions on a per-project basis. This is a highly recommended best practice.
+
+- **Action:** [Download and run the installer for nvm-windows](https://github.com/coreybutler/nvm-windows/releases).
+- **Verification:** Open a new terminal and run `nvm --version`.
+- **Usage:**
+  ```bash
+  # Install the latest Long-Term Support (LTS) version of Node.js
+  nvm install lts
+
+  # Set the LTS version as the one to use
+  nvm use [version_number_from_previous_command]
+
+  # Verify the node and npm versions
+  node -v && npm -v
+  ```
+- **Resource:** [NVM for Windows GitHub Repository](https://github.com/coreybutler/nvm-windows)
+
 ### Node.js (LTS)
 
-Node.js is the JavaScript runtime that powers our development server, build tools, and dependency management. Always use the Long-Term Support (LTS) version for the best stability.
+If you choose not to use NVM, you can install Node.js directly. Node.js is the JavaScript runtime that powers our development server, build tools, and dependency management. Always use the Long-Term Support (LTS) version for the best stability.
 
 - **Action:** [Download and install Node.js LTS](https://nodejs.org/en/download/) for Windows.
 - **Verification:** Open a new PowerShell or Command Prompt window and run `node -v` and `npm -v`. You should see the installed versions.
@@ -39,26 +58,46 @@ Visual Studio Code is our recommended code editor. Its rich ecosystem of extensi
 
 - **Action:** [Download and install VS Code](https://code.visualstudio.com/download) if you haven't already.
 
-### Essential VS Code Extensions
+### Recommended VS Code Extensions
 
-These extensions provide features like code completion, linting, and navigation, which are critical for a high-quality development experience.
+To significantly improve your development experience, we recommend installing several key extensions. Each of these is covered in a dedicated mini-lesson that explains its value and shows how to use it.
 
-- **[Angular Language Service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template)**: Provides rich editing features for Angular templates, including completions, error checking, and navigation. This is a must-have for any Angular developer.
-- **[ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)**: Integrates ESLint into VS Code to highlight and fix problems in your TypeScript code, helping you enforce consistent coding standards.
-- **[Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)**: An opinionated code formatter that ensures a consistent code style across your entire project.
-- **[Material Icon Theme](https://marketplace.visualstudio.com/items?itemName=PKief.material-icon-theme)**: Provides beautiful and informative icons for files and folders, making it easier to navigate your project structure.
-- **[Path Intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)**: Autocompletes filenames, which is incredibly helpful for managing imports and asset paths.
+- **Essential for Angular:**
+  - [Angular Language Service](./vscode-extensions/01-angular-language-service.md) - Provides rich IntelliSense and error-checking in templates.
 
-### Recommended Workflow Extensions
+- **Code Quality & Formatting:**
+  - [ESLint](./vscode-extensions/02-eslint.md) - For real-time code analysis and style enforcement.
+  - [Prettier - Code formatter](./vscode-extensions/03-prettier.md) - For automatic, consistent code formatting.
 
-These extensions streamline common development tasks.
-
-- **[Auto Import](https://marketplace.visualstudio.com/items?itemName=steoates.autoimport)**: Automatically finds, parses, and provides code actions and code completion for all available imports.
-- **[Auto Rename Tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)**: Automatically renames paired HTML/XML tags, saving you time and preventing errors.
+- **Workflow & UI Improvements:**
+  - [Material Icon Theme](./vscode-extensions/04-material-icon-theme.md) - For improved visual navigation of your project files.
+  - [Auto Rename Tag](./vscode-extensions/05-auto-rename-tag.md) - A simple time-saver for editing HTML.
 
 ## 3. Further Reading
 
 - **Blog Post:** [Getting Started with Node.js, Angular, and Visual Studio Code](https://devblogs.microsoft.com/premier-developer/getting-started-with-node-js-angular-and-visual-studio-code/) - A helpful guide from Microsoft.
 - **Article:** [Top VS Code Extensions for Angular Developers](https://dev.to/manthanank/top-vs-code-extensions-for-angular-developers-4374) - A good overview of useful extensions.
 
-With these tools and extensions in place, your environment is now optimized for building high-quality Angular applications efficiently.
+---
+
+## ✅ Verifiable Outcome
+
+The best way to verify that your entire environment is set up correctly is to create and run a new Angular application.
+
+1.  **Create the Project:**
+    -   Open a new terminal or PowerShell window.
+    -   Run the command: `ng new test-app`
+    -   The Angular CLI will ask you a few questions. Accept the defaults for now. This will create a new directory named `test-app` with a fresh Angular project.
+
+2.  **Run the Application:**
+    -   Navigate into the new directory: `cd test-app`
+    -   Run the local development server: `ng serve`
+    -   Open your web browser and navigate to `http://localhost:4200`.
+
+3.  **Expected Result:**
+    -   You should see the default Angular welcome page loading in your browser without any errors in the terminal. This confirms that Node.js, npm, and the Angular CLI are all installed and working together correctly.
+
+4.  **Check VS Code Integration:**
+    -   Open the `test-app` folder in VS Code.
+    -   Open `src/app/app.component.html`.
+    -   **Expected Result:** You should not see any errors about unrecognized tags. The "Angular Language Service" extension should provide syntax highlighting and basic analysis.

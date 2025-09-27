@@ -171,4 +171,26 @@ export class ItemsStore extends ComponentStore<ItemsState> {
 
 You can then trigger the effect from your component: `this.store.getItems();`.
 
-Component Store provides a powerful and lightweight pattern for managing state within the boundaries of a feature, giving you the structure of NgRx without the global overhead.
+---
+
+## ✅ Verifiable Outcome
+
+After completing this lesson, you can verify your understanding by building the `ItemsStore` and a component to consume it.
+
+1.  **Build the Store and Component:**
+    -   Create the `ItemsStore` as described in the lesson, including the state, selectors, updaters, and the `getItems` effect.
+    -   Create a mock `ItemsService` that the effect can call. It should return an `Observable` of a string array (e.g., `of(['First Item', 'Second Item']).pipe(delay(1000))`).
+    -   Create the `MyFeatureComponent` that provides and injects the store.
+    -   In the component's template, use the `vm$` selector with an `async` pipe to display the loading state and the list of items.
+    -   Add a button to trigger the `store.getItems()` effect.
+    -   Add an input field and a button to trigger the `store.addItem()` updater.
+
+2.  **Test the Effect:**
+    -   Run the application. The list should be empty.
+    -   Click the "Get Items" button.
+    -   **Expected Result:** You should immediately see the "Loading..." message appear. After a 1-second delay, the loading message should disappear, and the list of items from your mock service should be displayed.
+
+3.  **Test the Updater:**
+    -   Type a new item name into the input field.
+    -   Click the "Add Item" button.
+    -   **Expected Result:** The new item should instantly appear at the end of the list in the UI, demonstrating that the updater has modified the state correctly.

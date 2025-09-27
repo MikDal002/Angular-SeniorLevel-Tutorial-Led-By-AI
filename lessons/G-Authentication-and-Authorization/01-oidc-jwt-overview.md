@@ -67,4 +67,22 @@ When the ASP.NET Core API receives a request with an `Authorization: Bearer ...`
 
 If all checks pass, the API processes the request. If not, it returns a `401 Unauthorized` or `403 Forbidden` error.
 
-This entire architecture decouples authentication from your application logic. The Angular app doesn't handle passwords, and the Web API doesn't handle logins. Both simply trust the Authorization Server to do its job and verify the JWTs it issues.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify your understanding of this flow by using a public OIDC playground.
+
+1.  **Use an OIDC Debugger:**
+    -   Go to a public OIDC debugger tool, like the one provided by [Auth0](https://oidcdebugger.com/) or [Okta](https://oidcdebugger.com/). These tools act as a sample client application.
+
+2.  **Configure and Authenticate:**
+    -   The debugger will require an "Authorize URI" and a "Client ID" from an Authorization Server. You can often use the pre-filled sample values they provide.
+    -   Click the "Send Request" button.
+    -   You will be redirected to the Authorization Server's login page. Log in with the provided sample credentials (or your own account).
+    -   You may be asked to grant consent for the "application" (the debugger) to access your information.
+
+3.  **Inspect the Tokens:**
+    -   After you log in and grant consent, you will be redirected back to the debugger tool.
+    -   **Expected Result:** The tool will display the `id_token` and `access_token` it received from the Authorization Server.
+    -   Copy the `id_token` string and paste it into a JWT debugger like [jwt.io](https://jwt.io/). You will be able to see the decoded JSON payload, which contains claims like `sub` (subject/user ID), `iss` (issuer), and `exp` (expiration time), confirming your understanding of the token's contents.

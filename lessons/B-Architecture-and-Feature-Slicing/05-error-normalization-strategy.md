@@ -166,3 +166,23 @@ Most errors should be handled globally. However, sometimes a component needs to 
 -   **Decoupling:** UI components don't need to know about `HttpErrorResponse` or other complex error types. They only need to know how to display an `AppError`.
 -   **Maintainability:** If the backend error format changes, you only need to update the `fromHttpErrorResponse` method in the `ErrorNormalizationService`. The rest of the application is unaffected.
 -   **User Experience:** You can provide clear, helpful, and consistent error messages to your users, improving their overall experience.
+
+---
+
+## ✅ Verifiable Outcome
+
+After implementing this strategy, you can verify its functionality by triggering different types of errors.
+
+1.  **Implement the Services:**
+    -   Create the `AppError` model, the `ErrorNormalizationService`, and integrate it into your `GlobalErrorHandler`.
+    -   Create a mock `NotificationService` that can display a message (e.g., using `alert()` or by updating a property on a shared service that a component displays).
+
+2.  **Test a Client-Side Error:**
+    -   In a component, create a button with a click handler that throws a new `Error('Test client error')`.
+    -   Run the application and click the button.
+    -   **Expected Result:** An alert or notification should appear with the user-friendly message "An unexpected client-side error occurred." The developer console should show the detailed log from your `GlobalErrorHandler`.
+
+3.  **Test an HTTP Error:**
+    -   In a component, create a button that triggers an `HttpClient` call to a non-existent API endpoint (e.g., `/api/does-not-exist`).
+    -   Run the application and click the button.
+    -   **Expected Result:** Because the request will result in a 404, an alert or notification should appear with the user-friendly message "The requested resource could not be found." The console should show the detailed `HTTP_404` log from your `GlobalErrorHandler`. This verifies that your normalization service is correctly identifying and mapping `HttpErrorResponse` instances.

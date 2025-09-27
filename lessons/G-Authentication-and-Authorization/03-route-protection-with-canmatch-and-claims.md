@@ -130,4 +130,28 @@ export const ADMIN_ROUTES: Routes = [
 ```
 In this example, all authenticated users can see the admin dashboard, but only users with the `SuperAdmin` role can access the user management page.
 
-By using `canMatch` guards, you can create a secure, efficient, and highly flexible authorization system for your Angular application, ensuring that users can only access the routes and features they are permitted to see.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify your guards are working correctly by attempting to navigate to the protected routes under different authentication states.
+
+1.  **Implement the Guards and Routes:**
+    -   Create the `authGuard` and the `roleGuard` factory function.
+    -   Create a mock `AuthService` that allows you to easily set the `isLoggedIn` status and the current user's roles (e.g., via buttons in your `AppComponent`).
+    -   Configure your routes as described in the lesson, protecting an `/admin` route with `authGuard` and a nested `/admin/user-management` route with `roleGuard('SuperAdmin')`.
+
+2.  **Test the `authGuard`:**
+    -   Start the application in a "logged out" state.
+    -   Attempt to navigate directly to `/admin`.
+    -   **Expected Result:** The router should prevent the navigation and redirect you to `/login`.
+    -   Now, simulate a login.
+    -   Attempt to navigate to `/admin` again.
+    -   **Expected Result:** You should now be able to successfully access the `/admin` route.
+
+3.  **Test the `roleGuard`:**
+    -   While logged in, but without the `SuperAdmin` role, attempt to navigate to `/admin/user-management`.
+    -   **Expected Result:** The router should prevent the navigation and redirect you to `/forbidden`.
+    -   Now, simulate giving your user the `SuperAdmin` role.
+    -   Attempt to navigate to `/admin/user-management` again.
+    -   **Expected Result:** You should now be able to successfully access the user management page.

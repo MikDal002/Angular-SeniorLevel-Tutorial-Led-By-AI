@@ -13,6 +13,7 @@ This is convenient, but it has downsides:
 
 - **Resource:** [Official Angular Zoneless Guide](https://angular.dev/guide/zoneless)
 - **Resource:** [Zoneless Angular by Angular Experts](https://angularexperts.io/blog/zoneless-angular)
+- **Resource:** [Angular `ChangeDetectorRef` API Docs](https://angular.dev/api/core/ChangeDetectorRef)
 
 ## How Zoneless Works
 

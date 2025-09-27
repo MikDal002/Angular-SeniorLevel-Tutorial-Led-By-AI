@@ -55,21 +55,28 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
 }
 ```
 
-### Lab Task 1: Identify the Memory Leak
+---
 
-1.  Navigate to `/users/1`. You will see "UserDetailsComponent created" and "Received user data: User 1" in the console.
-2.  Navigate to another page (e.g., home). You will see "UserDetailsComponent destroyed".
-3.  The `paramMap` subscription is a long-lived observable. Even though the component is destroyed, the subscription inside `ngOnInit` remains active in memory. This is a classic memory leak. With enough navigations, this would slow down and eventually crash the application.
+## ✅ Verifiable Outcome
 
-### Lab Task 2: Identify the Race Condition
+You can verify the broken behavior and the subsequent fix by running the application and observing the console.
 
-1.  Add links to your app to navigate between `/users/1`, `/users/2`, and `/users/3`.
-2.  Click quickly between the links (e.g., click "User 1", then immediately click "User 2" before the first request finishes).
-3.  Observe the console logs. Because of the random delay, you might see the following sequence:
-    -   (Navigating to User 1...)
-    -   (Navigating to User 2...)
-    -   `Received user data: {id: "2", name: "User 2"}` -> UI updates to show User 2.
-    -   `Received user data: {id: "1", name: "User 1"}` -> **RACE CONDITION!** The slower request for User 1 finishes *last* and incorrectly overwrites the UI, leaving you on the `/users/2` URL but seeing data for User 1.
+### 1. Observe the Memory Leak
+
+-   Implement the **"Broken"** version of the `UserDetailsComponent`.
+-   Navigate to `/users/1`.
+-   Navigate to another page (e.g., home).
+-   **Expected Result:** In the browser console, you will see "UserDetailsComponent created" and then "UserDetailsComponent destroyed". However, after the component is destroyed, you will still see a "Received user data..." log message appear after a short delay. This is the memory leak in action—the subscription is still alive and running.
+
+### 2. Observe the Race Condition
+-   With the **"Broken"** version, add links to navigate between `/users/1` and `/users/2`.
+-   Click the link for `/users/1`, and then immediately (within a second) click the link for `/users/2`.
+-   **Expected Result:** Watch the UI. It's very likely that the page will first show "User 2", and then a moment later it will incorrectly flip back to showing "User 1", even though the URL is still `/users/2`. This demonstrates the race condition.
+
+### 3. Verify the Fix
+-   Implement the **"Fixed"** version of the `UserDetailsComponent` using the declarative `product$` stream.
+-   Repeat the memory leak test. When you navigate away from the user details page, you should **not** see any further "Received user data" logs.
+-   Repeat the race condition test. When you navigate quickly from `/users/1` to `/users/2`, the UI should correctly display "User 2" and stay that way, because the `switchMap` operator canceled the request for the first user.
 
 ## The "Fixed" Component
 

@@ -144,4 +144,28 @@ Pipes are great for controlling properties. For example, we can disable a button
 | **Structural Directive** | Completely removes the element from the DOM, which is more secure.        | More complex to write.                                   | Hiding sections, buttons, or navigation items that a user should not see. |
 | **Pipe**              | Very simple to write. Can be easily composed with other logic (e.g., `!`). | Only controls a property; the element is still in the DOM. | Disabling form fields or buttons that are visible but not interactive.    |
 
-By creating these reusable, declarative tools, you can keep your component templates clean and free of complex authorization logic, leading to a more secure and maintainable application.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify these declarative permission tools by creating a simple component and manipulating a mock `AuthService`.
+
+1.  **Implement the Tools:**
+    -   Create the `IfHasRoleDirective` and the `HasRolePipe`.
+    -   Create a mock `AuthService` with a public `BehaviorSubject` for the current user (e.g., `currentUser$ = new BehaviorSubject<User | null>(null)`) and a method to log in as different user types (e.g., `loginAsAdmin()`, `loginAsEditor()`, `logout()`).
+
+2.  **Build the UI:**
+    -   Create a component that uses both the directive and the pipe as shown in the examples.
+    -   Add buttons to the component that call the `loginAsAdmin()`, `loginAsEditor()`, and `logout()` methods on your mock service.
+
+3.  **Test the Directive:**
+    -   Run the application. Initially, you should be logged out.
+    -   **Expected Result:** The "Manage Users" button and the "Content Management" section should not be visible in the DOM.
+    -   Click the "Login as Editor" button.
+    -   **Expected Result:** The "Content Management" section should appear. The "Manage Users" button should still be hidden.
+    -   Click the "Login as Admin" button.
+    -   **Expected Result:** Both the "Content Management" section and the "Manage Users" button should now be visible.
+
+4.  **Test the Pipe:**
+    -   Observe the "Promote to Admin" button throughout the process.
+    -   **Expected Result:** The button should be visible at all times but should only be *enabled* when you are logged in as an admin. This confirms the pipe is correctly controlling the `[disabled]` property.

@@ -83,4 +83,23 @@ The Angular Component Dev Kit (CDK) has a dedicated `a11y` package with tools to
 
 - **Resource:** [Angular CDK Accessibility Overview](https://material.angular.io/cdk/a11y/overview)
 
-By starting with semantic HTML, ensuring keyboard accessibility, using ARIA for dynamic content, and leveraging the CDK's tools, you can build Angular applications that are usable and enjoyable for everyone.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify these accessibility concepts manually using only your browser and keyboard.
+
+1.  **Test Keyboard Navigation:**
+    -   In your application, try to navigate through all interactive elements (links, buttons, form inputs) using only the `Tab` key. Use `Shift+Tab` to navigate backwards.
+    -   **Expected Result:** You should be able to reach every single interactive element. The focus order should be logical (e.g., top-to-bottom, left-to-right). There should always be a visible focus indicator (like a blue outline) showing you which element is currently active.
+
+2.  **Test a Custom `cdkTrapFocus` Dialog:**
+    -   Implement a simple modal dialog component.
+    -   Add the `cdkTrapFocus` directive to the root element of the dialog.
+    -   Open the dialog and try to `Tab` through its elements.
+    -   **Expected Result:** Your focus should be "trapped" within the dialog. You should be able to cycle through the interactive elements inside the dialog, but you should not be able to `Tab` to the elements on the page behind the dialog.
+
+3.  **Test with a Screen Reader (Basic):**
+    -   Most operating systems have a built-in screen reader (e.g., Narrator on Windows, VoiceOver on macOS). Enable it.
+    -   Navigate your application using the keyboard.
+    -   **Expected Result:** Listen to the announcements. Does the screen reader announce buttons as "button"? Does it read the `aria-label` for icon-only buttons? When you focus an input, does it read the associated `<label>`? This provides direct feedback on how accessible your application is to visually impaired users.

@@ -8,7 +8,8 @@ Fortunately, the Angular team places a strong emphasis on making this process as
 
 Before starting any upgrade, your first and most important resource is the official **Angular Update Guide**.
 
-- **Link:** [https://update.angular.io/](https://update.angular.io/)
+- **Resource:** [Angular Update Guide](https://update.angular.io/)
+- **Resource:** [Angular Release and Versioning Guide](https://angular.dev/reference/releases)
 
 This interactive tool provides a customized, step-by-step checklist for your specific upgrade path. You select your current version and your target version, and it generates a detailed list of commands to run and manual changes to make. **Always consult this guide before a major version upgrade.**
 

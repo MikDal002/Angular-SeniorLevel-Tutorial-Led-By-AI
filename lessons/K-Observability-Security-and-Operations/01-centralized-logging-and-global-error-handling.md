@@ -5,6 +5,7 @@ In a production application, `console.log` and `console.error` are not enough. W
 This lesson covers how to use Angular's `ErrorHandler` to intercept all uncaught exceptions and forward them to a third-party logging service, using Sentry as a practical example.
 
 - **Resource:** [Sentry Documentation: Angular Error Handler](https://docs.sentry.io/platforms/javascript/guides/angular/features/error-handler/)
+- **Resource:** [Angular `ErrorHandler` API Documentation](https://angular.dev/api/core/ErrorHandler)
 
 ## The Role of the Global `ErrorHandler`
 

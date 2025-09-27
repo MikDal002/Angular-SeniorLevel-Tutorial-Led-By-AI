@@ -108,3 +108,23 @@ The `UserLoginComponent` is the container. It knows about the `AuthService`, man
 
 By consistently applying this pattern, especially for your `shared/ui` layer, you create a robust and scalable foundation for your Angular application.
 - **Resource:** [Designing Angular architecture - Container-Presentation pattern](https://angular.love/designing-angular-architecture-container-presentation-pattern/)
+
+---
+
+## ✅ Verifiable Outcome
+
+After completing this lesson, you can verify your understanding by building and testing the `ButtonComponent` and `UserLoginComponent` example.
+
+1.  **Create the `ButtonComponent`:**
+    -   Create the presentational `ButtonComponent` in `src/shared/ui/button/`.
+    -   Verify that it has no injected services in its constructor.
+
+2.  **Create the `UserLoginComponent`:**
+    -   Create the container `UserLoginComponent` in `src/features/user-login/`.
+    -   Create a mock `AuthService` that it can inject.
+    -   In the template, use the `<app-button>` component.
+
+3.  **Run the Application:**
+    -   Display the `UserLoginComponent` in your `app.component.html`.
+    -   Run `ng serve`.
+    -   **Expected Result:** You should see the login form with the reusable button. Clicking the button should trigger the `onLogin` method in the `UserLoginComponent` and log a message to the console, proving that the `@Output()` event binding is working correctly. The button's disabled state should also correctly reflect the form's state.

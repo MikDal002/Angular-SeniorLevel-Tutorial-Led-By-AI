@@ -77,6 +77,7 @@ Jest is a popular, fast, and feature-rich testing framework. We'll replace Angul
   }
   ```
 - **Resource:** [Setting Up Jest in Your Angular Project](https://medium.com/@philip.mutua/setting-up-jest-in-your-angular-16-project-3638ef65f3a3)
+- **Action:** Verify the setup by running `npm test`. The default `app.component.spec.ts` should execute and pass with Jest.
 
 ## 4. Add Angular Testing Library
 
@@ -87,6 +88,17 @@ Angular Testing Library (ATL) provides light-weight utility functions to test co
   ng add @testing-library/angular
   ```
 - **Resource:** [Official Angular Testing Library Documentation](https://testing-library.com/docs/angular-testing-library/intro/)
+- **Action:** Create a simple "hello world" test using ATL to verify the setup. Create a new file `src/app/app.component.atl.spec.ts`:
+  ```typescript
+  import { render, screen } from '@testing-library/angular';
+  import { AppComponent } from './app.component';
+
+  it('should render the title using ATL', async () => {
+    await render(AppComponent);
+    expect(screen.getByText('my-awesome-app is running!')).toBeInTheDocument();
+  });
+  ```
+- Run `npm test` again to ensure both the original spec and the new ATL spec pass.
 
 ## 5. Add Storybook
 
@@ -96,8 +108,9 @@ Storybook allows you to develop and test UI components in isolation, which is a 
   ```bash
   npx storybook init
   ```
-  This command will detect that you are using Angular and install all the required dependencies and set up the necessary scripts.
+  This command will detect that you are using Angular, install dependencies, and set up the necessary scripts and configuration. It will also create example stories.
 - **Resource:** [Storybook for Angular Documentation](https://storybook.js.org/docs/angular/get-started/install)
+- **Action:** Verify the setup by running `npm run storybook`. This should start the Storybook development server and open it in your browser, where you can see the example stories.
 
 ## 6. Add Playwright
 
@@ -107,7 +120,16 @@ Playwright is a modern end-to-end testing framework from Microsoft that allows y
   ```bash
   npm init playwright@latest
   ```
-  Follow the prompts to configure Playwright. It's recommended to create a separate `e2e` directory for these tests.
+  Follow the prompts to configure Playwright. It's recommended to create a separate `e2e` directory for these tests. This will generate a default `example.spec.ts`.
 - **Resource:** [Playwright Installation Guide](https://playwright.dev/docs/intro)
+- **Action:** Verify the setup by running `npx playwright test`. This will execute the example test, which navigates to a few websites and takes screenshots, confirming the runner is working.
 
-With these steps, you have a fully-featured Angular project scaffold that enforces code quality, has a robust testing strategy, and provides a great developer experience.
+---
+
+## ✅ Verifiable Outcome
+
+After completing this lesson, you should have a new Angular project with the following commands working correctly:
+1. **`npm run lint`**: Runs ESLint and Prettier to check code quality and formatting. It should pass without errors on the initial project structure.
+2. **`npm test`**: Runs the Jest unit test runner. It should execute the default `app.component.spec.ts` and show all tests passing.
+3. **`npm run storybook`**: Starts the Storybook development server, allowing you to view the default stories for the `Button` and `Header` components.
+4. **`npx playwright test`**: Runs the Playwright E2E test runner. It should execute the default example tests successfully.

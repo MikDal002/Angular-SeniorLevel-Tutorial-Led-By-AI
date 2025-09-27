@@ -122,3 +122,29 @@ By combining SOLID principles with patterns like the Adapter, you can create a c
 
 - **Resource:** [Adapter in TypeScript - Refactoring.Guru](https://refactoring.guru/design-patterns/adapter/typescript/example)
 - **Resource:** [Streamlining Data Flow in Angular: The Power of the Adapter Pattern](https://dev.to/bndf1/streamlining-data-flow-in-angular-the-power-of-the-adapter-pattern-1804)
+
+---
+
+## ✅ Verifiable Outcome
+
+After completing this lesson, you can verify your understanding by implementing the Port and Adapter pattern and testing its flexibility.
+
+1.  **Implement the `User` Port and Adapter:**
+    -   Create the abstract `UserDataService` class (the "port").
+    -   Create the `UserApiService` that extends it and uses `HttpClient` (the "adapter").
+    -   Create a component that injects `UserDataService` (the abstraction, not the concrete class) and calls `getUserById`.
+    -   Provide the implementation in your `app.config.ts`: `{ provide: UserDataService, useClass: UserApiService }`.
+    -   **Expected Result:** Your component should successfully fetch and display user data via the API adapter.
+
+2.  **Test the Decoupling with a Mock Adapter:**
+    -   Create a new service, `MockUserApiService`, that also `extends UserDataService`.
+    -   In this mock service, return a hardcoded, fake user object as an `Observable` instead of making an `HttpClient` call.
+        ```typescript
+        import { of } from 'rxjs';
+        // ...
+        getUserById(id: string): Observable<User> {
+          return of({ id, name: 'Mock User', email: 'mock@test.com' });
+        }
+        ```
+    -   In your `app.config.ts`, change the provider to use the mock implementation: `{ provide: UserDataService, useClass: MockUserApiService }`.
+    -   **Expected Result:** Run the application again **without changing the component code at all**. The component should now display the "Mock User" data, proving that your domain logic is successfully decoupled from the data source.

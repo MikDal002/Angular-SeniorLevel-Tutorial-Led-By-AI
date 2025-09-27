@@ -63,4 +63,25 @@ To maximize the benefits of this pattern, you need to be mindful of what you do 
 
 ## Conclusion
 
-For modern Angular development, `OnPush` should be your default change detection strategy. It provides the foundation for performance by default. When combined with Signals, it creates a highly efficient system where updates are surgical, targeted, and only happen when absolutely necessary. This synergy is the key to building fast, scalable, and responsive user interfaces.
+---
+
+## ✅ Verifiable Outcome
+
+This lesson is more conceptual, but you can verify the behavior with a small experiment.
+
+1.  **Create Two Components:**
+    -   Create a `ParentComponent` and a `ChildComponent`.
+    -   In `ParentComponent`, have a signal `parentSignal = signal(0)` and a button that increments it.
+    -   In `ChildComponent`, set `changeDetection: ChangeDetectionStrategy.OnPush`. Add a `console.log('ChildComponent change detection ran')` inside its template (e.g., in a getter or a function call, which is normally an anti-pattern but useful for this specific demonstration).
+    -   Display the `ChildComponent` inside the `ParentComponent`'s template.
+
+2.  **Run and Test:**
+    -   Run the application and open the developer console.
+    -   Click the button in the `ParentComponent` to update its signal.
+    -   **Expected Result:** You will see logs from the `ParentComponent`'s change detection, but you should **not** see the "ChildComponent change detection ran" message. This proves that `OnPush` prevented Angular from checking the child subtree unnecessarily.
+
+3.  **Add a Signal Input:**
+    -   Now, pass the `parentSignal` into the `ChildComponent` as an `@Input()`.
+    -   Read this input signal in the `ChildComponent`'s template.
+    -   Run the test again.
+    -   **Expected Result:** Now when you click the button in the parent, you **will** see the "ChildComponent change detection ran" message, because the child's signal dependency was updated, giving Angular a valid reason to check it.

@@ -3,6 +3,7 @@
 Good performance is not just about fast servers or small bundles; it's about the user's *perceived* experience. Google has standardized how we measure this experience with a set of metrics called **Core Web Vitals**. Monitoring and optimizing for these vitals is crucial for user satisfaction and can also impact your site's SEO ranking.
 
 - **Resource:** [Understanding Core Web Vitals (Google Search Central)](https://developers.google.com/search/docs/appearance/core-web-vitals)
+- **Resource:** [web.dev Articles on Core Web Vitals](https://web.dev/vitals/)
 
 ## What are the Core Web Vitals?
 

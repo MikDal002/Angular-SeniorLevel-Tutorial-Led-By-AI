@@ -106,4 +106,27 @@ Always use the most specific query that matches how a user would find the elemen
 
 6.  **`getByTestId`**: Finds an element by a `data-testid` attribute. This should be used only when you cannot find an element by any other user-visible means.
 
-By adopting Angular Testing Library, you shift your mindset from testing what your code *is* to testing what your code *does* from the perspective of a user, leading to more meaningful and robust tests.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify your understanding by writing both a traditional and an ATL-style test for the same component and observing the difference.
+
+1.  **Create the `CounterComponent`** as described in the lesson.
+
+2.  **Write the Traditional Test:**
+    -   Create a spec file `counter.traditional.spec.ts`.
+    -   Write the test using `fixture.debugElement.query(By.css(...))` and `component.count` as shown in the example.
+    -   Run `ng test`.
+    -   **Expected Result:** The test should pass.
+
+3.  **Write the ATL Test:**
+    -   Create a spec file `counter.atl.spec.ts`.
+    -   Write the test using `render`, `screen.getByText`, `screen.getByRole`, and `fireEvent` as shown in the example.
+    -   Run `ng test`.
+    -   **Expected Result:** The test should pass.
+
+4.  **Test the Resilience:**
+    -   Go back to `counter.component.ts` and refactor the internal property name from `count` to `currentValue`. Update the template to match: `{{ currentValue }}`.
+    -   Run `ng test` again.
+    -   **Expected Result:** The traditional test will now **fail** with a `TypeError` because the `count` property no longer exists. The ATL test will **continue to pass** without any changes, because the user-facing behavior (the visible text and the button's role) did not change. This demonstrates the resilience of the ATL approach.

@@ -91,4 +91,19 @@ export class AuthService {
 5.  The Authorization Server clears its session cookie for our application.
 6.  The Authorization Server then redirects the user back to the `post_logout_redirect_uri` we provided, which could be a simple "You have been logged out" page in our Angular app.
 
-This ensures a complete and secure logout, terminating the session at both the client and the central identity provider.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify these flows by observing your application's behavior and network traffic.
+
+1.  **Test Silent Renew:**
+    -   Implement the silent renew logic on application startup using a library like `angular-oauth2-oidc` or by manually triggering your OIDC flow in a hidden iframe.
+    -   Log in to the application. You should have your tokens stored in-memory.
+    -   Manually refresh the browser page (F5).
+    -   **Expected Result:** The page will reload, and you should remain in a logged-in state. The application should briefly show a loading state and then display your user information. In the Network tab of your DevTools, you will see the calls to your Authorization Server to get new tokens, but the user is not prompted to enter their credentials again.
+
+2.  **Test the Logout Flow:**
+    -   Log in to the application.
+    -   Click the "Logout" button.
+    -   **Expected Result:** You should be redirected to your Authorization Server's logout page, and then redirected back to the `post_logout_redirect_uri` you configured (e.g., `/logged-out`). Your local application state (e.g., in NgRx store or services) should be completely cleared. If you try to use the browser's "back" button to return to a protected route, you should be immediately redirected to the login page.

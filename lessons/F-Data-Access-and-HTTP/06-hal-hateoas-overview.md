@@ -77,4 +77,20 @@ While powerful, HATEOAS introduces complexity for both the backend and the clien
 
 For many applications, especially those where the client and server are developed by the same team, the tight coupling of hardcoded URLs is considered an acceptable trade-off for the simplicity it provides.
 
-However, for large-scale, long-lived public APIs, HATEOAS is a powerful architectural principle that promotes longevity and independent evolution.
+---
+
+## ✅ Verifiable Outcome
+
+Since this is a conceptual lesson, the best way to verify your understanding is to interact with a real HATEOAS API and observe its behavior.
+
+1.  **Explore a HATEOAS API:**
+    -   The GitHub REST API is a well-known example of a HATEOAS-driven API.
+    -   Use your browser or a tool like Postman to make a `GET` request to the root endpoint: `https://api.github.com`.
+
+2.  **Observe the Response:**
+    -   **Expected Result:** Look at the JSON response. Instead of just data, you will see a list of key-value pairs where the keys describe a resource (e.g., `"current_user_url"`, `"emails_url"`, `"emojis_url"`) and the values are the complete URLs to those resources.
+
+3.  **Follow the Links:**
+    -   Copy the URL from the `"emojis_url"` property (`https://api.github.com/emojis`).
+    -   Make a new `GET` request to this URL.
+    -   **Expected Result:** You will receive a list of all the emojis supported by GitHub. This demonstrates the "discoverability" principle of HATEOAS. You did not need to know the specific URL for emojis ahead of time; you discovered it by following the hypermedia links provided in the root API response. This confirms your understanding of how a client can navigate an API based on the state provided by the server.

@@ -143,4 +143,19 @@ describe('DebounceTime with TestScheduler', () => {
 -   **Precise:** It gives you complete control over the timing and emission of values, making it ideal for testing complex operators like `combineLatest`, `mergeMap`, `retry`, etc.
 -   **Powerful:** It's the standard for testing libraries built with RxJS and is the most robust way to test your own complex observable pipelines.
 
-While Jest's fake timers are great for simple component-level tests, mastering the `TestScheduler` is essential for writing reliable unit tests for your core RxJS-based services and effects.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify your understanding of both time control methods by writing and running the tests described in this lesson.
+
+1.  **Implement the Jest Fake Timers Test:**
+    -   Create the `SearchInputComponent`.
+    -   Create the `search-input.component.spec.ts` file and add the test cases that use `jest.useFakeTimers()` and `jest.advanceTimersByTime()`.
+    -   Run `ng test`.
+    -   **Expected Result:** All tests should pass. The tests will execute almost instantly, without waiting for the real 300ms debounce time, proving that the fake timers are working correctly.
+
+2.  **Implement the RxJS `TestScheduler` Test:**
+    -   Create the `DebounceTime with TestScheduler` test suite.
+    -   Run `ng test`.
+    -   **Expected Result:** The test should pass. Try changing the `expectedMarble` string to be incorrect (e.g., `---b----c|`). The test should now fail with a clear error message showing the difference between the expected and actual marble diagrams, confirming your understanding of how to write and read marble tests.

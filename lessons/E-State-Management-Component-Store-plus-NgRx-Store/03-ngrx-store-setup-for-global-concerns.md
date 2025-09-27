@@ -160,4 +160,23 @@ export class SomeComponent {
 | **Complexity**       | More boilerplate (actions, reducers, effects).                  | Less boilerplate, more concise.                                             |
 | **Source of Truth**  | The single source of truth for global application state.        | A source of truth for its local domain.                                     |
 
-By using both tools appropriately, you can build a clean, scalable state management architecture where global concerns are handled robustly and local state is managed efficiently without polluting the global namespace.
+---
+
+## ✅ Verifiable Outcome
+
+After setting up the global auth store, you can verify its functionality using the Redux DevTools browser extension.
+
+1.  **Install Redux DevTools:**
+    -   Install the [Redux DevTools extension for your browser](https://github.com/reduxjs/redux-devtools).
+
+2.  **Build the Auth State:**
+    -   Implement the `auth.actions.ts`, `auth.reducer.ts`, and `auth.selectors.ts` files as described in the lesson.
+    -   Configure the store and devtools in `app.config.ts`.
+    -   Create a simple `LoginComponent` that dispatches the `AuthActions.loginSuccess` action with mock user data when a button is clicked.
+    -   Create a `ProfileComponent` that uses the `selectIsLoggedIn` and `selectCurrentUser` selectors to display user information.
+
+3.  **Test the Flow:**
+    -   Run the application and open the browser's Redux DevTools panel.
+    -   **Expected Initial State:** In the DevTools, you should see the `auth` state slice with its initial values (`isLoggedIn: false`, `user: null`). The `ProfileComponent` should show a "logged out" state.
+    -   In the `LoginComponent`, click the button to dispatch the `loginSuccess` action.
+    -   **Expected Result:** You will see the `[Auth API] Login Success` action appear in the DevTools action log. The state chart will update to show the new state (`isLoggedIn: true`, user data is populated). The `ProfileComponent` should reactively update to display the user's information. This confirms the entire Action -> Reducer -> Store -> Selector -> UI flow is working correctly.

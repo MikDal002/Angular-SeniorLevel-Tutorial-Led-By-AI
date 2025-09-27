@@ -111,4 +111,20 @@ This system is incredibly efficient. Computations only run when necessary, and t
 
 - **Resource:** [Angular Signals: A Comprehensive Introduction](https://dev.to/nikhil6076/angular-signals-a-comprehensive-introduction-45h2)
 
-By using `signal()` for your raw state and `computed()` for derived values, you can create highly reactive and performant components with clean, declarative, and easy-to-understand state management logic.
+---
+
+## ✅ Verifiable Outcome
+
+After completing this lesson, you can verify your understanding by building the `CounterComponent` example.
+
+1.  **Create the Component:**
+    -   Build the final version of the `CounterComponent`, including the `count` signal and the `evenOrOdd` and `isDecrementDisabled` computed signals.
+    -   Display the component in your `app.component.html`.
+
+2.  **Run and Test:**
+    -   Run `ng serve`.
+    -   **Expected Initial State:** The component should display "Count: 0" and "The count is even." The "Decrement" button should be disabled.
+    -   Click the "Increment" button.
+    -   **Expected Result:** The count should update to 1, the message should change to "The count is odd," and the "Decrement" button should become enabled.
+    -   Click the "Decrement" button.
+    -   **Expected Result:** The count should return to 0, the message should switch back to "even," and the "Decrement" button should become disabled again. This confirms that both the writable and computed signals are reacting correctly to changes.

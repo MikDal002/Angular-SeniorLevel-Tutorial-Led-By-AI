@@ -96,4 +96,37 @@ For a real project, you don't want to run NSwagStudio manually every time the AP
 ```
 - **Resource:** [Generate code with NSwag using the OpenAPI Specification](https://timdeschryver.dev/bits/generate-code-with-nswag-using-the-openapi-specification)
 
-By leveraging code generation, you create a more robust and efficient development workflow, allowing you to focus on building features instead of writing boilerplate data access code.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify this process by generating a client from the public "PetStore" API.
+
+1.  **Generate the Client:**
+    -   Open NSwagStudio.
+    -   For the "Swagger Specification URL", use the public PetStore URL: `https://petstore.swagger.io/v2/swagger.json`.
+    -   Configure the TypeScript client settings as described in the lesson.
+    -   Generate the output file into your project (e.g., `src/app/shared/api/petstore-client.ts`).
+
+2.  **Integrate and Use the Client:**
+    -   In your `app.config.ts`, provide the `API_BASE_URL` token with the value `'https://petstore.swagger.io/v2'`.
+    -   In a component, inject one of the generated client services, for example, `PetClient`.
+    -   Call a method on the client and log the result:
+        ```typescript
+        import { PetClient } from './shared/api/petstore-client.ts';
+        // ...
+        export class AppComponent implements OnInit {
+          private petClient = inject(PetClient);
+
+          ngOnInit() {
+            // Get pet with ID 1
+            this.petClient.getPetById(1).subscribe(pet => {
+              console.log('Successfully fetched pet:', pet);
+            });
+          }
+        }
+        ```
+
+3.  **Run and Verify:**
+    -   Run the application and open the browser's developer console.
+    -   **Expected Result:** You should see a log message containing the details for the pet with ID 1, confirming that your generated client successfully made a live API call. You can also check the "Network" tab to see the outgoing request to the PetStore API.

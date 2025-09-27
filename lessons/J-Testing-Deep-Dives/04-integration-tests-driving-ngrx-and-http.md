@@ -130,4 +130,23 @@ This test verifies that:
 -   The `productsReducer` correctly processes the `Success` action and updates the state.
 -   The component's selector correctly reads the new state and updates the view.
 
-By testing this entire flow, you gain high confidence that your feature works from end to end, with the only mocked dependency being the external network. This is a powerful technique for building reliable and maintainable NgRx applications.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify your understanding of this testing pattern by implementing the integration test described in the lesson.
+
+1.  **Build the Feature:**
+    -   Create the `ProductsContainerComponent`, `ProductService`, and the NgRx files (`actions`, `reducer`, `effects`, `selectors`) for a "products" feature.
+
+2.  **Write the Integration Test:**
+    -   Create the `products.integration.spec.ts` file.
+    -   Implement the `setup` function that uses `TestBed` to provide the real store, effects, and services, along with the `HttpClientTestingModule`.
+    -   Write the two test cases: one for the success scenario and one for the failure scenario.
+
+3.  **Run the Test:**
+    -   Execute `ng test`.
+    -   **Expected Result:** Both integration tests should pass.
+        -   The success test will confirm that a user action can trigger a chain of events through the entire NgRx stack, resulting in a mocked HTTP call and a final UI update.
+        -   The failure test will confirm that if the mocked HTTP call returns an error, the UI correctly displays the appropriate error state.
+    -   This confirms your ability to write high-level tests that validate the complete functionality of a feature slice.

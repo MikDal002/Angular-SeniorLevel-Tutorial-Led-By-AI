@@ -114,4 +114,25 @@ The treemap allows you to visually identify large dependencies. You can hover ov
 -   **Incorrectly imported modules:** Are you accidentally importing all of RxJS or an entire icon library when you only need a small part of it?
 -   **Code that should be lazy-loaded:** Do you see a large feature-specific module inside your `main` bundle? That's a prime candidate for lazy loading.
 
-By regularly setting budgets and analyzing your bundles, you can move from reactive performance fixes to a proactive culture of performance maintenance, ensuring your application stays fast and lean as it evolves.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify these tools are working correctly by intentionally breaking a budget and by running the analyzer.
+
+1.  **Test the Performance Budget:**
+    -   In your `angular.json`, set a very small budget that is guaranteed to fail. For example:
+        ```json
+        "budgets": [{
+          "type": "initial",
+          "maximumWarning": "100b",
+          "maximumError": "200b"
+        }]
+        ```
+    -   Run a production build: `ng build`.
+    -   **Expected Result:** The build process should **fail** and print a red error message to the console, stating that the bundle size has exceeded the configured budget. This confirms the budget enforcement is working. Remember to set the budget back to a reasonable number afterwards.
+
+2.  **Run the Bundle Analyzer:**
+    -   Add the `webpack-bundle-analyzer` package and the `analyze` script to your `package.json` as described in the lesson.
+    -   Run the script: `npm run analyze`.
+    -   **Expected Result:** After the build completes, a new browser tab should open automatically, displaying the interactive treemap visualization of your application's bundles. You should be able to hover over the different colored blocks to see the names and sizes of the packages that make up your application.

@@ -101,4 +101,24 @@ The `prefetch` keyword uses the same set of triggers.
 }
 ```
 
-Deferrable views are a game-changer for Angular performance, giving you fine-grained control over your application's bundle size and loading behavior directly within your templates.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify the behavior of `@defer` by observing the build output and the browser's Network tab.
+
+1.  **Verify Code Splitting:**
+    -   Create a new, standalone `HeavyComponent`.
+    -   In another component's template, wrap the `<app-heavy-component>` selector in a `@defer` block.
+    -   Run `ng build`.
+    -   **Expected Result:** Inspect the build output in your terminal. You will see an extra, separate JavaScript "chunk" file has been generated specifically for the `HeavyComponent`. This confirms it has been split from the main bundle.
+
+2.  **Test the `on viewport` Trigger:**
+    -   Use the `@defer (on viewport)` trigger. Add enough content to your page so that the deferred component is initially "below the fold" (you have to scroll to see it).
+    -   Run `ng serve` and open the DevTools "Network" tab.
+    -   **Expected Result:** When the page first loads, the chunk for `HeavyComponent` is **not** downloaded. As soon as you scroll down and the component's placeholder enters the viewport, you will see a new network request to fetch the component's JavaScript chunk.
+
+3.  **Test the `on interaction` Trigger:**
+    -   Change the trigger to `@defer (on interaction)`. Use a button as the `@placeholder`.
+    -   Run the application.
+    -   **Expected Result:** The component's chunk is not downloaded on page load. It is only downloaded after you click the placeholder button.

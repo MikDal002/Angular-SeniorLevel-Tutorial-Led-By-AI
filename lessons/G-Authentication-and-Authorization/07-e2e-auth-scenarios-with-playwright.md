@@ -137,4 +137,23 @@ test('logout flow', async ({ page }) => {
 });
 ```
 
-By mocking the authentication state, you can create fast, reliable, and focused E2E tests for your application's core features without the flakiness of interacting with a third-party UI.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify this E2E testing setup by running the Playwright tests and observing their behavior.
+
+1.  **Implement the Test Setup:**
+    -   Configure your `playwright.config.ts` to include the `setup` project and dependency.
+    -   Create the `auth.setup.ts` file that injects a mock authentication state into `localStorage`.
+    -   Create the `admin-dashboard.spec.ts` and `logout.spec.ts` test files.
+
+2.  **Run the Tests:**
+    -   Execute the tests from your terminal: `npx playwright test`
+
+3.  **Verify the Results:**
+    -   **Expected Result:** The test runner should first execute the `auth.setup.ts` file, creating the `user.json` authentication file. Then, it will run the tests in the other spec files.
+    -   The "should allow a logged-in user" test should pass, successfully navigating to the protected route without ever showing a login screen.
+    -   The "should redirect an unauthenticated user" test should pass by creating a new, clean browser context.
+    -   The "logout flow" test should pass, verifying that the user is redirected and the `localStorage` is cleared.
+    -   All tests should pass, confirming that you can reliably test authenticated states in your E2E suite.

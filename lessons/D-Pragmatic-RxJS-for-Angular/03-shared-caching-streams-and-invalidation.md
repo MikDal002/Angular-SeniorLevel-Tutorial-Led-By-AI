@@ -95,4 +95,25 @@ export class ProductsService {
 -   This triggers `switchMap` again, which cancels any pending fetch and subscribes to `productsHttp$` again, making a fresh API call.
 -   The new result is broadcast to all subscribers and cached by `shareReplay`.
 
-This pattern provides a highly efficient and robust way to manage shared data in your application, giving you full control over when and how data is fetched and refreshed, all while preventing the "thundering herd" problem of multiple, simultaneous requests for the same data.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify that the caching and invalidation pattern is working correctly by using the browser's developer tools.
+
+1.  **Implement the Service:**
+    -   Create the `ProductsService` as described in the lesson.
+    -   You will need to use `HttpClientTestingModule` and `HttpTestingController` to mock the backend response for `/api/products`.
+
+2.  **Create a UI:**
+    -   Create two separate components (`ComponentA` and `ComponentB`) that both inject `ProductsService` and subscribe to the `products$` observable in their templates using the `async` pipe.
+    -   Create a third component that has a "Refresh" button which calls the `productsService.refresh()` method.
+    -   Display all three components on the same page.
+
+3.  **Test the Initial Cache:**
+    -   Run the application and open the DevTools "Network" tab.
+    -   **Expected Result:** You should see **only one** request go out to `/api/products`. Both `ComponentA` and `ComponentB` should display the product data. This proves that the stream is being shared and the result is cached.
+
+4.  **Test the Invalidation:**
+    -   Click the "Refresh" button.
+    -   **Expected Result:** You should see **a single new** request go out to `/api/products` in the Network tab. Both components will update with the new data (if your mock provides a different response on the second call), confirming that the cache was successfully invalidated and the new value was broadcast to all subscribers.

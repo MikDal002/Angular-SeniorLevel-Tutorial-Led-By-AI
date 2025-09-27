@@ -105,4 +105,26 @@ For a client-side SPA, creating a sitemap is typically a **build-time or server-
 2.  Generate an XML file in the sitemap format containing the URLs for each resource (e.g., `https://www.mystore.com/products/123`).
 3.  Place this `sitemap.xml` file in the root of your deployed application.
 
-While client-side tools can manage titles and meta tags for the user and modern crawlers, a complete SEO and shareability strategy for a large SPA often requires server-side support (SSR) and build-time processes (sitemap generation).
+---
+
+## ✅ Verifiable Outcome
+
+You can verify that the `Title` and `Meta` services are working correctly using your browser's developer tools.
+
+1.  **Implement the Service Calls:**
+    -   In a component that is loaded by a route (e.g., `ProductDetailsComponent`), inject the `Title` and `Meta` services.
+    -   In `ngOnInit`, call `setTitle()` and `updateTag()` to set a dynamic title and a description meta tag.
+
+2.  **Verify in the Browser:**
+    -   Run the application and navigate to the route for your component.
+    -   **Test Title:** Look at the text in the browser tab.
+        -   **Expected Result:** The browser tab's title should update to the new title you set with the `Title` service.
+    -   **Test Meta Tags:** Open the browser's DevTools and inspect the `<head>` element of the document.
+        -   **Expected Result:** You should find the `<meta name="description" ...>` tag, and its `content` attribute should be updated with the value you provided to the `Meta` service.
+
+3.  **Test Social Cards (Optional but Recommended):**
+    -   Add the Open Graph (`og:`) and Twitter (`twitter:`) meta tags as shown in the lesson.
+    -   Use a social card validator tool to test one of your application's URLs (note: this requires your app to be deployed to a public URL).
+        -   [Twitter Card Validator](https://cards-dev.twitter.com/validator)
+        -   [Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/)
+    -   **Expected Result:** The tool should show you a preview of how a link to your page will look when shared, using the title, description, and image you specified in the meta tags. (This works most reliably if your application uses SSR).

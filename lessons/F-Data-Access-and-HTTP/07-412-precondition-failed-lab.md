@@ -133,4 +133,31 @@ export class ProductEditComponent implements OnInit {
 }
 ```
 
-This lab demonstrates a complete, robust pattern for optimistic concurrency control. It prevents data loss, provides a clear path for user resolution, and relies on standard, well-understood HTTP mechanisms.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify this optimistic concurrency flow by creating a mock backend that simulates the ETag logic.
+
+1.  **Implement the Services and Component:**
+    -   Create the `EtagService`, `ConcurrencyInterceptor`, and `ProductEditComponent` as described in the lesson.
+    -   Use `HttpClientTestingModule` and `HttpTestingController` to create a mock backend for your `ProductService`.
+
+2.  **Simulate the "Mid-Air Collision":**
+    -   In your test, first simulate the initial `GET` request. Flush it with a mock product and an `ETag` header.
+        ```typescript
+        const reqGet = httpTestingController.expectOne('/api/products/123');
+        reqGet.flush({ id: '123', name: 'Original Name' }, { headers: { 'ETag': '"v1"' } });
+        ```
+    -   Now, simulate the `PUT` request from the `onSave` method.
+    -   Instead of flushing it with a success response, flush it with a `412 Precondition Failed` error.
+        ```typescript
+        const reqPut = httpTestingController.expectOne('/api/products/123');
+        // Verify the If-Match header was added by the interceptor
+        expect(reqPut.request.headers.get('If-Match')).toBe('"v1"');
+        // Flush with the 412 error
+        reqPut.flush('Precondition Failed', { status: 412, statusText: 'Precondition Failed' });
+        ```
+
+3.  **Verify the UI Response:**
+    -   **Expected Result:** Since the test will receive the `412` error, the `catchError` block in your component should execute. You can use a spy on the `window.confirm` method to verify that the user was prompted with the correct message about the conflict. This confirms your component is correctly handling the optimistic concurrency failure.

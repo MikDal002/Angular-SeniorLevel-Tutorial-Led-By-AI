@@ -127,4 +127,36 @@ export const errorLoggingInterceptor: HttpInterceptorFn = (req, next) => {
 };
 ```
 
-By carefully considering the order of your interceptor chain, you can build a powerful, modular, and maintainable system for handling cross-cutting HTTP concerns in your Angular application.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify that your interceptor chain is working in the correct order by adding `console.log` statements to each interceptor and observing the output.
+
+1.  **Implement the Interceptors:**
+    -   Create the four interceptors as described in the lesson: `auth`, `etag`, `retry`, and `errorLogging`.
+    -   In each interceptor, add a log statement at the beginning of the `intercept` function (e.g., `console.log('Auth Interceptor - Request Out')`).
+    -   In the `pipe()` block for the response, add another log (e.g., `console.log('Auth Interceptor - Response In')`).
+    -   Provide them in the correct order in your `app.config.ts`.
+
+2.  **Trigger an HTTP Call:**
+    -   Create a component that makes a simple `HttpClient.get()` call to a public API.
+    -   Run the application and trigger the API call.
+
+3.  **Verify the Order:**
+    -   Open the browser's developer console.
+    -   **Expected Result:** You should see the "Request Out" logs appear in the exact order you provided the interceptors:
+        ```
+        Auth Interceptor - Request Out
+        ETag Interceptor - Request Out
+        Retry Interceptor - Request Out
+        Error Logging Interceptor - Request Out
+        ```
+    -   After the network request completes, you should see the "Response In" logs appear in the **reverse** order:
+        ```
+        Error Logging Interceptor - Response In
+        Retry Interceptor - Response In
+        ETag Interceptor - Response In
+        Auth Interceptor - Response In
+        ```
+    -   This confirms that you have correctly configured the chain and understand how requests and responses flow through it.

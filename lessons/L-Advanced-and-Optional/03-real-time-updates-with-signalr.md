@@ -4,6 +4,7 @@ Many modern applications require real-time communication with the server. Instea
 
 This lesson covers how to integrate the SignalR client into an Angular application to receive and react to real-time messages from the server.
 
+- **Resource:** [Microsoft Docs: ASP.NET Core SignalR JavaScript client](https://learn.microsoft.com/en-us/aspnet/core/signalr/javascript-client)
 - **Resource:** [Using real-time data in Angular with SignalR](https://blog.logrocket.com/using-real-time-data-angular-signalr/)
 - **Resource:** [Integrate SignalR with Angular](https://pradhanadi.medium.com/integrate-signalr-with-angular-ee71a4508434)
 

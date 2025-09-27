@@ -113,29 +113,25 @@ Beyond colors, you can also customize typography and the density of your compone
 
 - **Resource:** [Customizing Density](https://material.angular.io/guide/density)
 
-## 4. Verify the Setup
+---
 
-To make sure everything is working, let's add a Material component to your `app.component.html`.
+## ✅ Verifiable Outcome
 
-- **Action:** In your `app.module.ts` (or the `imports` array of your standalone `AppComponent`), import `MatButtonModule`.
-  ```typescript
-  import { MatButtonModule } from '@angular/material/button';
+After completing this lesson, you can verify that your theme is set up correctly:
 
-  // ... in your imports array
-  @NgModule({
-    imports: [
-      // ...
-      MatButtonModule,
-    ],
-    // ...
-  })
-  ```
-- **Action:** In your `app.component.html`, add a styled button.
-  ```html
-  <button mat-raised-button color="primary">Primary Button</button>
-  <button mat-raised-button color="accent">Accent Button</button>
-  <button mat-raised-button color="warn">Warn Button</button>
-  ```
-- **Action:** Run `ng serve` and you should see three buttons styled with the colors from your custom theme.
+1.  **Add a Material Component:**
+    -   In your `app.component.ts` (if standalone) or `app.module.ts`, import `MatButtonModule`.
+    -   In `app.component.html`, add the following button:
+        ```html
+        <button mat-raised-button color="primary">Primary Themed Button</button>
+        ```
 
-With a custom theme, you have full control over the visual identity of your application, ensuring it aligns with your brand while leveraging the power and consistency of Angular Material.
+2.  **Run the Application:**
+    -   Run `ng serve`.
+    -   **Expected Result:** You should see a styled Material button. Its background color should match the primary palette you defined in `theme.scss` (e.g., indigo).
+
+3.  **Test a Theme Change:**
+    -   Open `src/theme.scss`.
+    -   Change the primary palette variable, for example: `$my-app-primary: mat.define-palette(mat.$green-palette);`
+    -   Save the file. The application should hot-reload.
+    -   **Expected Result:** The button in your browser should now have a green background color, confirming that your custom theme file is correctly configured and applied.

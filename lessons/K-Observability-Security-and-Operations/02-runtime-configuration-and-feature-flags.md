@@ -4,6 +4,7 @@ The standard Angular CLI `environments` files are great for values that are know
 
 The solution is to load configuration at **runtime**. This involves fetching a configuration file when the application first starts up, *before* the main `AppComponent` is rendered. This pattern is also perfect for managing **feature flags**, which allow you to remotely enable or disable features in your application without a redeployment.
 
+- **Resource:** [Angular `APP_INITIALIZER` API Documentation](https://angular.dev/api/core/APP_INITIALIZER)
 - **Resource:** [Loading App Configuration in the APP_INITIALIZER by Preston Lamb](https://www.prestonlamb.com/blog/loading-app-config-in-app-initializer/)
 - **Resource:** [Dynamic Configuration: Leveraging APP_INITIALIZER](https://angular.love/dynamic-configuration-leveraging-app-initializer/)
 

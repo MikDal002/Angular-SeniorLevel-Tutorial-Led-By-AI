@@ -200,4 +200,29 @@ A dedicated logging service provides a flexible way to manage application logs. 
   ```
 - **Resource:** [Adding Logging in Angular Applications](https://www.codemag.com/article/1711021/Logging-in-Angular-Applications)
 
-By centralizing these cross-cutting concerns, you create a more robust and maintainable application. The rest of your code can focus on delivering business value, while these core services handle the technical details consistently.
+---
+
+## ✅ Verifiable Outcome
+
+After implementing these services, you can verify their functionality:
+
+1.  **Test the `APP_INITIALIZER`:**
+    -   In your `ConfigService`, add a `console.log` inside the `.then()` block after fetching the config.
+    -   Run the application and open the browser's developer console.
+    -   **Expected Result:** You should see your log message *before* any logs from your `AppComponent`, proving that the initializer runs first. The application should not load if the `config.json` file is missing or invalid.
+
+2.  **Test the `HttpInterceptor`:**
+    -   In your `AuthInterceptor`, add a `console.log('Request intercepted!')`.
+    -   Create a component that makes any `HttpClient` call (e.g., to a public test API).
+    -   Run the application, trigger the HTTP call, and check the developer console's "Network" tab.
+    -   **Expected Result:** You should see your log message in the console, and the outgoing request in the Network tab should have the `Authorization: Bearer YOUR_AUTH_TOKEN` header attached.
+
+3.  **Test the `GlobalErrorHandler`:**
+    -   In any component, add a button that intentionally throws an error when clicked:
+        ```typescript
+        throwTestError() {
+          throw new Error('This is a test error!');
+        }
+        ```
+    -   Run the application and click the button.
+    -   **Expected Result:** Check the developer console. Instead of just the raw error, you should see the formatted log message from your `GlobalErrorHandler` (e.g., "Client Error: This is a test error!"), confirming that your handler has successfully intercepted the exception.

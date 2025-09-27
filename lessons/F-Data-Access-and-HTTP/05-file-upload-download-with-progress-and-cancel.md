@@ -156,3 +156,27 @@ This approach gives you full control over the download process, allowing you to 
 
 - **Resource:** [Angular File Download with Progress](https://dev.to/angular/angular-file-download-with-progress-985)
 - **Resource:** [Official Angular Docs on non-JSON data](https://angular.io/guide/http-making-requests#fetching-other-types-of-data)
+
+---
+
+## ✅ Verifiable Outcome
+
+You can verify these patterns by setting up a component and mocking the backend requests.
+
+1.  **Test File Upload:**
+    -   Implement the `FileUploadComponent`. You will need a mock backend or a simple Express server that can accept a file upload to test against.
+    -   Select a file using the input.
+    -   Click the "Upload" button.
+    -   **Expected Result:** You should see the progress bar appear and animate from 0% to 100%. The "Cancel" button should be visible during the upload.
+
+2.  **Test Upload Cancellation:**
+    -   To test cancellation, you'll need to simulate a slow upload on your mock backend.
+    -   Select a file and click "Upload".
+    -   While the progress bar is visible (before it reaches 100%), click the "Cancel" button.
+    -   **Expected Result:** The progress bar should disappear. In your browser's DevTools "Network" tab, you should see that the pending `POST` request is immediately marked as **`(canceled)`**.
+
+3.  **Test File Download:**
+    -   Implement the `DownloadService` and `FileDownloadComponent`.
+    -   Create a button in the component that calls the `onDownload` method with a URL to a sample file (e.g., a public image URL) and a desired filename.
+    -   Run the application and click the download button.
+    -   **Expected Result:** Your browser's native download prompt should appear, asking you to save the file with the filename you specified in the component.

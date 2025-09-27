@@ -143,4 +143,23 @@ export class CacheInterceptor implements HttpInterceptor {
 | **Control**             | Full programmatic control over when to revalidate.       | Controlled by the backend via HTTP headers.                 |
 | **Best For**            | Critical UI data where perceived performance is key.     | Static or semi-static data (e.g., config, dropdown lists). |
 
-Choosing the right caching strategy depends on the specific needs of your application, but combining both patterns can lead to a highly performant and efficient data access layer.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify these caching strategies by observing the "Network" tab in your browser's developer tools.
+
+1.  **Test the SWR Pattern:**
+    -   Implement the `ProductsSWRService` and a component that subscribes to its `products$` observable.
+    -   Use `HttpTestingController` to mock the response for `/api/products`.
+    -   When the component loads, you should see one network request.
+    -   Navigate away from the component and then back to it.
+    -   **Expected Result:** You should see **no new network request**. The data is served from the `BehaviorSubject` cache. Now, call the `revalidate()` method. You should see a new network request fire, and the UI should update with the new data.
+
+2.  **Test the `Cache-Control` Interceptor:**
+    -   Implement the `CacheInterceptor` and provide it in your `app.config.ts`.
+    -   Create a component that makes a `GET` request to a public API that you know returns a `Cache-Control` header (or mock one with `HttpTestingController` that has the header).
+    -   Trigger the request once.
+    -   **Expected Result:** You will see the request in the Network tab.
+    -   Trigger the same request a second time immediately.
+    -   **Expected Result:** You will **not** see a second request in the Network tab. The response was served from your interceptor's `Map` cache. If you wait for the `max-age` duration to pass and trigger it again, a new network request should be made.

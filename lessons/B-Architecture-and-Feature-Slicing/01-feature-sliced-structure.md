@@ -97,4 +97,23 @@ To prevent violations of the FSD rules (e.g., an `entity` importing a `feature`)
 
 - **Example Project:** [Angular Feature Sliced V2 Architecture example](https://github.com/Affiction/angular-feature-sliced)
 
-By adopting a Feature-Sliced structure, you can build large-scale Angular applications that are robust, maintainable, and a pleasure to work on.
+---
+
+## ✅ Verifiable Outcome
+
+After completing this lesson, you can verify your understanding by implementing and testing the architectural rules.
+
+1.  **Create the Directory Structure:**
+    -   In your `src` folder, create the top-level directories: `pages`, `widgets`, `features`, `entities`, and `shared`.
+
+2.  **Create a Sample Component:**
+    -   Create a simple `ButtonComponent` in `src/shared/ui/button`.
+    -   Create a `UserProfileComponent` in `src/entities/user/ui/user-profile`.
+
+3.  **Test a Valid Import:**
+    -   In the `UserProfileComponent`, import and use the `ButtonComponent`.
+    -   **Expected Result:** The application should compile and run without errors, as an `entity` is allowed to depend on `shared`.
+
+4.  **Test an Invalid Import:**
+    -   In the `ButtonComponent` (in `shared`), try to import and use the `UserProfileComponent` (from `entities`).
+    -   **Expected Result:** If you have configured the `eslint-plugin-import` rule correctly, your linter should immediately flag this as an error. The build should fail if you try to run it, preventing you from violating the architectural boundaries. This confirms your quality gates are enforcing the FSD rules.

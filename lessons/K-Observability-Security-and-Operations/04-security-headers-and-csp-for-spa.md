@@ -4,6 +4,7 @@ While much of your application's security is handled by the backend, the fronten
 
 The most powerful client-side defense against XSS is a strong **Content Security Policy (CSP)**, delivered via an HTTP header from your web server.
 
+- **Resource:** [MDN Docs: Content Security Policy (CSP)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
 - **Resource:** [Angular Security Best Practices](https://angular.dev/best-practices/security#content-security-policy-csp)
 - **Resource:** [Angular Content Security Policy (CSP) Guide](https://www.stackhawk.com/blog/angular-content-security-policy-guide-what-it-is-and-how-to-enable-it/)
 

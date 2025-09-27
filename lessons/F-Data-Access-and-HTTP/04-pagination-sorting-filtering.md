@@ -161,4 +161,27 @@ export class ProductsListComponent {
 }
 ```
 
-This pattern creates a clean separation of concerns. The UI is responsible for dispatching user intent, and the service is responsible for managing the state and orchestrating the data fetching logic in a predictable, reactive, and efficient way. This approach works seamlessly with component libraries like Angular Material's Paginator and Sort Header.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify this reactive pattern is working by observing the "Network" tab in your browser's developer tools.
+
+1.  **Implement the Service and Component:**
+    -   Create the `ProductsService` and `ProductsListComponent` as described in the lesson.
+    -   You can use a real public API that supports pagination (like `jsonplaceholder.typicode.com`) or mock the backend with `HttpTestingController`.
+    -   The component UI should have a text input for filtering, buttons for sorting, and buttons for changing the page.
+
+2.  **Test the Initial Load:**
+    -   Run the application.
+    -   **Expected Result:** You should see a single network request in the DevTools with the default parameters (e.g., `_page=1`, `_limit=10`, `_sort=name`).
+
+3.  **Test Filtering:**
+    -   Type "test" quickly into the filter input.
+    -   **Expected Result:** You should **not** see a network request for "t", "te", or "tes". After you stop typing for 300ms, you should see a single new network request with the `q=test` parameter added. This verifies the `debounceTime`.
+
+4.  **Test Pagination and Sorting:**
+    -   Click the "Next Page" button.
+    -   **Expected Result:** A new network request should be sent immediately with `_page=2`.
+    -   Click a "Sort by Price" button.
+    -   **Expected Result:** A new network request should be sent immediately with `_sort=price`. This confirms that all state changes are correctly combined and trigger a new API call.

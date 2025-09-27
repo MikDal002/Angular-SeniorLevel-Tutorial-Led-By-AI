@@ -116,3 +116,32 @@ npx playwright show-trace path/to/your/trace.zip
 The Trace Viewer is one of Playwright's most powerful features, turning what used to be a frustrating debugging process into a straightforward investigation.
 
 - **Resource:** [Playwright Documentation: Trace Viewer](https://playwright.dev/docs/trace-viewer-intro)
+
+---
+
+## ✅ Verifiable Outcome
+
+You can verify these best practices by implementing them in your Playwright test suite.
+
+1.  **Test Network Mocking:**
+    -   Write a test for a component that fetches data, similar to the "Mocking a Product API" example.
+    -   Use `page.route()` to intercept the API call and provide a mock response.
+    -   Run the test.
+    -   **Expected Result:** The test should pass very quickly. In the test report or console output, you should see no actual network request being made to your backend API, proving that the request was successfully mocked.
+
+2.  **Test Retries and Tracing:**
+    -   Configure `retries: 1` and `trace: 'on-first-retry'` in your `playwright.config.ts`.
+    -   Create a deliberately "flaky" test that is designed to fail the first time but pass the second time. A simple way to do this is with a global flag:
+        ```typescript
+        let firstRun = true;
+        test('flaky test', async ({ page }) => {
+          if (firstRun) {
+            firstRun = false;
+            await expect(page.locator('body')).toHaveText('Something that does not exist');
+          }
+          await expect(page.locator('body')).not.toHaveText('Something that does not exist');
+        });
+        ```
+    -   Run `npx playwright test`.
+    -   **Expected Result:** In your console, you will see that the test failed once and was immediately retried. The second run will pass, and the overall test suite will be marked as successful.
+    -   Now, check your `playwright-report` folder. You will find a `trace.zip` file for the failed first attempt. Run `npx playwright show-trace path/to/your/trace.zip`. The Trace Viewer will open, allowing you to inspect the exact reason for the initial failure. This confirms both the retry and tracing mechanisms are working as configured.

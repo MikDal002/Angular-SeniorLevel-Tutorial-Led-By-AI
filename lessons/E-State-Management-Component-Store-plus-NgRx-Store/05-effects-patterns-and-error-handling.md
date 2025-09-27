@@ -104,4 +104,25 @@ loadProductsWithTapResponse$ = createEffect(() => this.actions$.pipe(
 
 This operator is purely for convenience and does the exact same thing as the manual `map`/`catchError` pattern, but it can make your effects cleaner and more readable.
 
-By combining the correct concurrency strategy with robust, well-placed error handling, you can create NgRx Effects that are predictable, resilient, and easy to debug.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify the error handling pattern by creating a test that simulates an API failure.
+
+1.  **Implement the "Wrong" Effect:**
+    -   Create the `loadProductsWrong$` effect as described in the lesson, where `catchError` is placed on the outer stream.
+    -   Use `HttpTestingController` in your test to mock the `productService.getAll()` call and make it return an error.
+        ```typescript
+        const req = httpTestingController.expectOne('/api/products');
+        req.flush('Server error', { status: 500, statusText: 'Server Error' });
+        ```
+    -   In your test, dispatch the `loadProducts` action **twice**.
+
+2.  **Observe the "Dead" Effect:**
+    -   **Expected Result:** The test will show that the `loadProductsFailure` action was dispatched after the first attempt. However, the effect is now "dead." When the second `loadProducts` action is dispatched, the effect will not trigger, and no further HTTP requests will be made.
+
+3.  **Implement the "Correct" Effect:**
+    -   Refactor the effect to use the correct pattern, with `catchError` placed on the inner observable.
+    -   Run the same test again, dispatching the `loadProducts` action twice and flushing the first request with an error.
+    -   **Expected Result:** The `loadProductsFailure` action is dispatched after the first attempt. When the second `loadProducts` action is dispatched, the effect should trigger again, and you should see a **second** HTTP request being made in your test via `httpTestingController.expectOne()`. This proves the effect remained alive and continued listening for actions after the first error was handled.

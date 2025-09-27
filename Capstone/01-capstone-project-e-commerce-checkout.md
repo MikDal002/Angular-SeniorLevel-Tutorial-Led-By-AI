@@ -68,3 +68,35 @@ You will deliver a fully tested, performant, and secure cart/checkout flow with 
 -   Integrate a RUM service to monitor **Core Web Vitals** in production.
 
 This capstone project will challenge you to apply all the patterns and best practices from this course to build an application that is not just functional, but also scalable, performant, maintainable, and secure. Good luck!
+
+## Final Verification Checklist
+
+Before considering the project complete, ensure you can check off all of the following items. This checklist summarizes the core quality and feature requirements.
+
+- **CI/CD Quality Gates:**
+    - [ ] All GitHub Actions checks are consistently passing on your main branch.
+    - [ ] This includes `ng lint`, `ng test`, and `npx playwright test`.
+    - [ ] The production build does not fail the performance budget checks in `angular.json`.
+
+- **Authentication and Authorization:**
+    - [ ] The `/checkout` route is successfully protected by a `canMatch` guard, redirecting unauthenticated users.
+    - [ ] The UI correctly shows "Login" or "Logout" based on authentication status.
+    - [ ] The `HttpInterceptor` correctly attaches the Bearer token to authenticated API requests.
+
+- **Core Application Flow (Manual Check):**
+    - [ ] **Product List:** The main product list page renders correctly and uses virtual scrolling for performance.
+    - [ ] **Deferred Loading:** The "related products" section on a product detail page loads only when scrolled into view.
+    - [ ] **Cart Management:** Items can be added to the cart, quantities can be updated (with optimistic UI), and items can be removed. All actions are reflected in the NgRx store.
+    - [ ] **Checkout Form:** The form is built with strongly-typed reactive forms and includes all necessary validators, including the debounced async validator for the coupon code.
+    - [ ] **Order Submission:** A valid order can be successfully submitted, and the user is redirected to a confirmation page.
+    - [ ] **Error Handling:** API errors (like the 412 Precondition Failed) are gracefully handled, and the user is notified.
+
+- **Testing and Documentation:**
+    - [ ] Unit tests for NgRx state logic (reducers, selectors, effects) are complete and passing.
+    - [ ] User-centric component tests cover critical UI components.
+    - [ ] E2E tests cover the full "happy path" of a user adding an item to the cart and completing a checkout.
+    - [ ] Shared UI components are documented with Storybook and include interaction tests.
+
+- **Security & Operations:**
+    - [ ] A strict Content Security Policy (CSP) is delivered via server headers and can be verified using browser dev tools.
+    - [ ] Triggering a test exception in the application results in a report being sent to your configured logging service (e.g., Sentry).

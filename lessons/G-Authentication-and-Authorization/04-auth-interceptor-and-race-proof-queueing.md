@@ -116,4 +116,24 @@ export class AuthService {
 4.  **Refresh Completes:** The `/api/auth/refresh` call returns. The new tokens are stored, and `refreshTokenSubject` emits the new access token.
 5.  **Queue is Released:** Request 2 and Request 3, which were waiting on `refreshTokenSubject`, now receive the new token. Their `switchMap` operators execute, and they are retried with the valid token. Request 1's observable chain also proceeds to retry itself.
 
-This pattern elegantly solves the race condition by creating a temporary, asynchronous "lock" (`refreshTokenInProgress`) and a queue (`refreshTokenSubject`), ensuring a smooth and seamless experience for the user even when their access token expires.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify the single-flight pattern is working correctly by using `HttpClientTestingModule` and observing the network requests in your test. This is the same verification as the previous "Token Refresh" lesson, as it directly tests this queueing mechanism.
+
+1.  **Implement the Services:**
+    -   Create the `AuthService` and `AuthInterceptor` as described in the lesson.
+    -   Provide the interceptor in your test's `TestBed` configuration.
+
+2.  **Create the Test:**
+    -   In your test, trigger two parallel API calls to different endpoints (e.g., `/api/user` and `/api/notifications`).
+    -   Use `HttpTestingController` to handle the requests.
+
+3.  **Simulate the Race Condition:**
+    -   Expect both initial requests. Flush both of them with a `401 Unauthorized` error.
+    -   **Expected Result:** Your `AuthService` logic will now trigger. You should expect **only one** request to your refresh endpoint (`/api/auth/refresh`).
+    -   Flush the refresh request with a successful response containing new tokens.
+    -   **Expected Result:** The service should now retry the original two failed requests. You should expect two new requests, one to `/api/user` and one to `/api/notifications`. Verify that these new requests have the new access token attached to their `Authorization` header.
+
+This test proves that even though two requests failed simultaneously, only one refresh attempt was made, and both original requests were successfully queued and retried after the refresh completed.

@@ -4,6 +4,8 @@ As a frontend application grows in size and complexity, and as the team working 
 
 This lesson is a high-level, conceptual overview of these two architectural styles. It is not an implementation guide, but rather an analysis to help you decide *if and when* a micro-frontend architecture might be appropriate for your project.
 
+- **Resource:** [Martin Fowler's Article on Micro-Frontends](https://martinfowler.com/articles/micro-frontends.html)
+- **Resource:** [micro-frontends.org](https://micro-frontends.org/)
 - **Resource:** [Microfrontends To The Rescue Of Big Single Page Application Monoliths](https://selleo.com/blog/microfrontends-to-the-rescue-of-big-single-page-application-monoliths)
 - **Resource:** [Monolithic Frontend vs Micro-Frontend Application](https://xhulqornayn.hashnode.dev/monolithic-frontend-vs-micro-frontend-application-differences-pros-and-cons)
 

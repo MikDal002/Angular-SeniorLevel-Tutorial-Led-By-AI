@@ -127,4 +127,25 @@ export class ProductDetailsComponent {
 | **Cancellation**    | Difficult                                         | **Automatic** (with `switchMap`)                                  |
 | **Recommendation**  | Avoid for primary data fetching.                  | **Strongly Recommended** for almost all route-based data fetching. |
 
-For a modern, high-performance SPA, favor **in-component data fetching**. It provides a superior user experience and a more robust, declarative, and maintainable pattern for developers.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify the difference in user experience between these two patterns by implementing both and observing the application's behavior.
+
+1.  **Implement Both Patterns:**
+    -   Create a mock `ProductService` whose `getProductById` method has a noticeable delay (e.g., `of(product).pipe(delay(2000))`).
+    -   Create two routes:
+        -   `/product-resolver/:id`: This route should use the `productResolver` as described in Pattern 1.
+        -   `/product-component/:id`: This route should use the in-component fetching pattern as described in Pattern 2.
+    -   Add links in your `AppComponent` to navigate to both routes.
+
+2.  **Test the Resolver (Blocking) Pattern:**
+    -   Start on the home page.
+    -   Click the link to navigate to `/product-resolver/123`.
+    -   **Expected Result:** The application will appear to freeze. You will remain on the home page for 2 seconds, and then the product details page will suddenly appear, fully rendered. This demonstrates the blocking nature of resolvers.
+
+3.  **Test the In-Component (Non-Blocking) Pattern:**
+    -   Start on the home page.
+    -   Click the link to navigate to `/product-component/123`.
+    -   **Expected Result:** You will be taken **immediately** to the product details page, which will display the "Loading product..." message. After 2 seconds, the loading message will be replaced by the product data. This demonstrates the superior, non-blocking user experience.

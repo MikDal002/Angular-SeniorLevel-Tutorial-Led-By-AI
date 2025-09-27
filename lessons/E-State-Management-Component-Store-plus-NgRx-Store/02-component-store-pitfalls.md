@@ -120,4 +120,26 @@ this.updater(state => ({
 ```
 For deeply nested state, this can become verbose. Libraries like `immer` (or `ngrx-immer`) can simplify this process, but understanding the manual spread-operator pattern is fundamental.
 
-By avoiding these common pitfalls, you can leverage the full power of Component Store to create state management logic that is safe, predictable, and easy to debug.
+---
+
+## ✅ Verifiable Outcome
+
+You can verify your understanding of these pitfalls by creating tests or small UI experiments to observe the incorrect and correct behaviors.
+
+1.  **Test for Racing Effects:**
+    -   Create a Component Store with a `saveItem` effect. Use `mergeMap` and a mock API service with a 1-second delay.
+    -   Create a component with a "Save" button that calls `store.saveItem()`.
+    -   Run the application and click the "Save" button twice in quick succession.
+    -   **Expected (Bad) Result:** You will see two parallel API requests fired in the "Network" tab of your DevTools.
+    -   Now, change the operator in the effect from `mergeMap` to `exhaustMap`.
+    -   Run the test again, clicking the button twice quickly.
+    -   **Expected (Good) Result:** You will see only **one** API request in the Network tab. The second click was ignored, preventing the race condition.
+
+2.  **Test for Nested Mutations:**
+    -   Create a store with a state that has a nested array: `myState = { config: { values: ['a', 'b'] } }`.
+    -   Create an updater that uses the **BAD** mutation pattern (`state.config.values.push('c')`).
+    -   Create a component that displays the length of the `values` array using a selector: `valuesLength$ = this.select(state => state.config.values.length)`.
+    -   Add a button to trigger the bad updater.
+    -   **Expected (Bad) Result:** When you click the button, the UI will likely **not** update to show the new length. Because you mutated the state in place, NgRx's memoized selectors won't detect a change and the view will become stale.
+    -   Now, fix the updater to use the **GOOD** immutable pattern (`...` spread operator).
+    -   **Expected (Good) Result:** When you click the button, the UI will now correctly update to show the new length, as a new state object has been created.
